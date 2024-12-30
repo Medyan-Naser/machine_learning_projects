@@ -38,6 +38,7 @@ plt.plot(X_train, regressor.predict(X_train), color = 'blue')
 plt.title('Salary vs Experience (Test set)')
 plt.xlabel('Years of Experience')
 plt.ylabel('Salary')
+plt.suptitle('Simple Linear Regression', fontsize=14)
 plt.show()
 
 
@@ -93,4 +94,5 @@ plt.xlabel('Index')
 plt.ylabel('Profit')
 plt.legend()
 plt.grid(True)
+plt.suptitle('Multiple Linear Regression', fontsize=14)
 plt.show()
