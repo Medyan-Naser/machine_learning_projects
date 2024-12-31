@@ -2,7 +2,7 @@ name: Auto Commit Non-Hidden Files
 
 on:
   schedule:
-    - cron: '0 17 * * *'  # Schedule at 6 PM UTC daily
+    - cron: '0 17 * * *'  # Schedule at 5 PM UTC daily
 
 jobs:
   auto-commit:
@@ -11,7 +11,7 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
-      
+
     - name: Configure Git User
       run: |
         git config --global user.name "Medyan Naser"
@@ -30,9 +30,15 @@ jobs:
         random_index=$((RANDOM % ${#messages[@]}))
         commit_message="${messages[$random_index]}"
 
-        # Commit and push changes
-        #git config user.name "Medyan Naser"
-        #git config user.email "medyan7.naser@gmail.com"
+        # Commit the changes
         git commit -m "$commit_message" || echo "No changes to commit"
+
+    - name: Push Changes
+      env:
+        GH_TOKEN: ${{ secrets.GH_PAT }}
+      run: |
+        # Use the token to authenticate and push changes
+        git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git
         git push origin main
+
 
