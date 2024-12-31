@@ -1,0 +1,42 @@
+name: Auto Commit Non-Hidden Files
+
+on:
+  schedule:
+    - cron: '0 17 * * *'  # Schedule at 5 PM UTC daily
+
+jobs:
+  auto-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Configure Git User
+      run: |
+        git config --global user.name "Medyan Naser"
+        git config --global user.email "medyan7.naser@gmail.com"
+
+    - name: Update Non-Hidden Files
+      run: |
+        # Add a timestamp to a file to ensure there is always a change
+        echo "Last updated on: $(date)" > update.txt
+
+        # Stage all non-hidden files in the repository
+        git add *
+
+        # Use dynamic commit messages
+        messages=("Minor updates" "Latest changes" "Improvements made" "Adjustments and tweaks" "Updated project files" "General updates")
+        random_index=$((RANDOM % ${#messages[@]}))
+        commit_message="${messages[$random_index]}"
+
+        # Commit the changes
+        git commit -m "$commit_message" || echo "No changes to commit"
+
+    - name: Push Changes
+      env:
+        GH_TOKEN: ${{ secrets.GH_PAT }}
+      run: |
+        # Use the token to authenticate and push changes
+        git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git
+        git push origin main
