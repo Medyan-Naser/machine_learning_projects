@@ -2,7 +2,7 @@ name: Auto Commit Non-Hidden Files
 
 on:
   schedule:
-    - cron: '0 17 * * *'  # Schedule at 5 PM UTC daily
+    - cron: '20 19 * * *'  # Schedule at 5 PM UTC daily
 
 jobs:
   auto-commit:
