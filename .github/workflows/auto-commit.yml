@@ -2,7 +2,7 @@ name: Auto Commit Non-Hidden Files
 
 on:
   schedule:
-    - cron: '33 19 * * *'  # Schedule at 5 PM UTC daily
+    - cron: '50 19 * * *'  # Schedule at 5 PM UTC daily
 
 jobs:
   auto-commit:
@@ -38,5 +38,5 @@ jobs:
         GH_TOKEN: ${{ secrets.GH_PAT }}
       run: |
         # Use the token to authenticate and push changes
-        git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}
+        git remote set-url origin https://${GH_TOKEN}@github.com/${{ github.repository }}
         git push origin main
