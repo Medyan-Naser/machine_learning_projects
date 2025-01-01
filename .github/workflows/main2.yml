@@ -2,20 +2,20 @@ name: Auto Commit Non-Hidden Files
 
 on:
   schedule:
-    - cron: '35 19 * * *'  # Schedule at 5 PM UTC daily
+    - cron: '0 17 * * *'  # Schedule at 5 PM UTC daily
 
 jobs:
   auto-commit:
     runs-on: ubuntu-latest
 
+    permissions:
+      # Give the default GITHUB_TOKEN write permission to commit and push the
+      # added or changed files to the repository.
+      contents: write
+
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
-
-    - name: Configure Git User
-      run: |
-        git config --global user.name "Medyan Naser"
-        git config --global user.email "medyan7.naser@gmail.com"
 
     - name: Update Non-Hidden Files
       run: |
@@ -29,14 +29,8 @@ jobs:
         messages=("Minor updates" "Latest changes" "Improvements made" "Adjustments and tweaks" "Updated project files" "General updates")
         random_index=$((RANDOM % ${#messages[@]}))
         commit_message="${messages[$random_index]}"
-
         # Commit the changes
         git commit -m "$commit_message" || echo "No changes to commit"
-
-    - name: Push Changes
-      env:
-        GH_TOKEN: ${{ secrets.GH_PAT }}
-      run: |
-        # Use the token to authenticate and push changes
-        git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}
-        git push origin main
+   
+      
+    - uses: stefanzweifel/git-auto-commit-action@v5
