@@ -1,7 +1,5 @@
 # Artificial Neural Network
 
-# Part 1 - Data Preprocessing
-
 # Importing the libraries
 import numpy as np
 import matplotlib.pyplot as plt
@@ -50,7 +48,7 @@ sc = StandardScaler()
 X_train = sc.fit_transform(X_train)
 X_test = sc.transform(X_test)
 
-# Part 2 - Building the ANN
+# Building the ANN
 # Initialising the ANN
 classifier = Sequential()
 
@@ -72,8 +70,7 @@ classifier.fit(X_train, y_train, batch_size=32, epochs=100)
 # Fitting the ANN to the Training set and capturing the training history
 history = classifier.fit(X_train, y_train, batch_size=32, epochs=100, validation_split=0.1)
 
-# Part 3 - Making the predictions and evaluating the model
-
+# Making the predictions and evaluating the model
 # Predicting the Test set results
 y_pred = classifier.predict(X_test)
 y_pred = (y_pred > 0.5)
@@ -84,8 +81,7 @@ cm = confusion_matrix(y_test, y_pred)
 print("Confusion Matrix:\n", cm)
 
 
-# Part 4 - Plotting the results
-
+# Plotting the results
 # Plot training and validation loss
 plt.figure(figsize=(12, 6))
 plt.plot(history.history['loss'], label='Training Loss', color='blue')
