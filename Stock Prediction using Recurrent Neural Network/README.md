@@ -69,6 +69,4 @@ Once trained, the model is used to make predictions on the test dataset. The rea
 
 ## Conclusion
 
-Conclusion
-
 The RNN with LSTM architecture is well-suited for stock price prediction, as it effectively captures the temporal dependencies inherent in time-series data. The model, with its multiple LSTM layers and regularization techniques like Dropout, demonstrates a robust ability to forecast stock prices. Its performance could potentially be further enhanced by incorporating more advanced techniques or additional features such as market indicators.
