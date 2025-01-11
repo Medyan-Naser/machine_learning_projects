@@ -6,10 +6,15 @@ This repository is a collection of various machine learning projects I have work
 
 | Project Name                     | Description                                                                 |
 |----------------------------------|-----------------------------------------------------------------------------|
+| **Fraud Detection using Artificial Neural Networks**  | Analyzing bank customer data using ANN for pattern detection and SOM to identify potential fraud. |
+| **Coloring Black & White Images** | Developing deep learning models to add color to grayscale images, enhancing their visual appeal. |
+| **Stock Prediction using Recurrent Neural Network**  | Applying Recurrent Neural Networks (RNNs) to forecast stock prices based on historical data. |
+| **Movie Rating Prediction using Unsupervised Learning**  | Predicting if a customer will like a movie using Autoencoders and Boltzmann Machines. |
 | **Classification of Customer Purchases Using Multiple Methods**  | Predicting whether a customer will buy a car using various classification techniques.  | 
 | **Customer Segmentation Using Clustering Methods** | Applying clustering techniques to segment mall customers based on their purchasing behaviors and demographics. |
+| **Image Classification using Convolutional Neural Network**  |  Training a CNN to classify images as either a cat or a dog. |
+| **Natural-Language**  | Using Random Forest and Maximum Entropy models to classify reviews as positive or negative. |
 | **Salary Prediction Using Regression Models** | Building regression models to predict employee salaries based on key features like experience, education, and role. |
-| **Coloring Black & White Images** | Developing deep learning models to add color to grayscale images, enhancing their visual appeal. |
 
 
 ## Technologies and Tools Used
