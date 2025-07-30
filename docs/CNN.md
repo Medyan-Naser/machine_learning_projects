@@ -63,3 +63,23 @@ model = Sequential([
 - Flatten → prepares features for Dense layers.
 - Dense layers → perform final prediction.
 - CNNs excel at image classification, object detection, and computer vision tasks.
+
+## Data Augmentation
+
+Data Augmentation is a technique to artificially increase the size and diversity of your training dataset by applying random transformations to the input data (usually images).
+
+The goal:
+
+- Prevent overfitting by making the model see more varied examples.
+- Improve generalization to unseen data.
+- Reduce dependency on large datasets.
+
+**Common Image Augmentations**
+
+- Flip: Horizontal/vertical flip of an image.
+- Rotation: Rotate images by small random degrees.
+- Zoom / Crop: Zoom in/out, crop random parts.
+- Shift: Translate image horizontally/vertically.
+- Brightness / Contrast: Change lighting conditions.
+- Shear: Skew image along an axis.
+- Noise: Add random noise for robustness.
