@@ -4,3 +4,5 @@ nav:
   - Home: index.md
   - Libraries: libraries.md
   - Methods: methods.md
+  - Model: optimizers.md
+  - CNN: CNN.md
