@@ -3,3 +3,4 @@ site_name: ML & AI Knowledge Hub
 nav:
   - Home: index.md
   - Libraries: libraries.md
+  - Methods: methods.md
