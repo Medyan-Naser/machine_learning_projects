@@ -1,7 +1,10 @@
 # Gradient Descent
 
+Gradient is vectore of relatvie derivitave.
+the magnitude of gradient descent of all the componenets tells you which changes matter more. some connections (weights) matter more.
+
 Gradient Descent is the core algorithm behind most optimizers.  
-It updates model parameters (weights and biases) by moving them in the direction that reduces the loss function.
+It updates model parameters (weights and biases) by moving them in the direction that reduces the loss (cost) function.
 
 **Idea**: Find the parameter values that minimize the loss.
 **Update Rule**:  
