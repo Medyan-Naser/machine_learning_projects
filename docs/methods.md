@@ -10,6 +10,7 @@ In supervised learning, the algorithm is trained on labeled data (inputs with kn
 - Polynomial Regression: Extends linear regression with polynomial terms to model non-linear relationships.
 - Non-linear Regression: Uses more complex functions (e.g., exponential, logarithmic, or kernel-based) to capture relationships beyond polynomial.
 - Regression Trees: Decision trees designed for predicting continuous outcomes instead of categories.
+# TODO add SVR
 
 ### Classification (Predicting Categories)
 Note: all of the following can be used for Regression
@@ -19,12 +20,15 @@ Note: all of the following can be used for Regression
 - Support Vector Machines (SVM): Finds the best hyperplane to separate classes with maximum margin.
 - K-Nearest Neighbors (KNN): Classifies based on the majority label among the k closest training samples.
 - Naive Bayes: A probabilistic model based on Bayes’ theorem, assuming independence between features.
+# TODO add SVM
 
 ### Ensemble Methods (combines multiple models to produce a stronger and more accurate overall model)
 Note: can be used for Classification and Regression
 
 - Random Forests: Combines many decision trees to reduce overfitting and improve accuracy.
 - Gradient Boosting (XGBoost, LightGBM, CatBoost): Builds trees sequentially, correcting previous errors for high accuracy.
+
+
 
 ## 2. Unsupervised Learning
 In unsupervised learning, the algorithm learns from unlabeled data, discovering patterns or groups.
@@ -41,6 +45,7 @@ In unsupervised learning, the algorithm learns from unlabeled data, discovering 
 ## 3. Dimensionality Reduction / Feature Extraction
 Used to reduce the number of input features while retaining most information.
 
+- Autoencoder: Neural network that learns compressed representations of data and reconstructs the original input.
 - Principal Component Analysis (PCA): Projects data into fewer dimensions that capture the most variance.
 - t-SNE (t-Distributed Stochastic Neighbor Embedding): Non-linear technique for visualizing high-dimensional data in 2D/3D.
 - UMAP (Uniform Manifold Approximation and Projection): Preserves both local and global structure, faster than t-SNE.
@@ -55,5 +60,5 @@ Used to reduce the number of input features while retaining most information.
 - Transformers: State-of-the-art models for NLP and vision tasks.
 
 ### Reinforcement Learning (RL)
-- Q-Learning, Deep Q-Networks: Learn optimal policies through reward signals.
+- Q-Learning, Deep Q-Networks (DQN): Learn optimal action policies by estimating the value (Q-value) of taking an action in a given state, using reward feedback from the environment.
 - Policy Gradient Methods: Directly optimize decision-making policies.
