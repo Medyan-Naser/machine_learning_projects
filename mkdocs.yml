@@ -4,7 +4,7 @@ nav:
   - Home: index.md
   - Libraries: libraries.md
   - Methods: methods.md
-  - Model: optimizers.md
+  - Optimizers: optimizers.md
   - CNN: CNN.md
   - 3B1B: 3Blue1Brown.md
   - LLM: LLM.md
