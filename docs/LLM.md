@@ -291,8 +291,83 @@ Here $d_k$ is the dimension of the key/query space, added for numerical stabilit
 
 ---
 
-## 14. Multilayer Perceptron (MLP)
+## 14. The Multi-Layer Perceptron (MLP)  
 
+### Role in Transformers  
+In transformers, each token embedding repeatedly flows through two key components:  
+- **Attention**, which lets embeddings exchange context.  
+- **MLPs**, which independently transform each embedding to enrich meaning and store knowledge.  
+
+While attention gets most of the attention, a **majority of the model’s parameters live inside the MLPs**. Research (e.g., from Google DeepMind) suggests that many of the model’s **factual associations** — like *Michael Jordan → basketball* — are encoded in these MLP layers.  
+
+---
+
+### Structure of an MLP Block  
+Each MLP block processes each token embedding independently:  
+
+1. **Up Projection (Expansion)**  
+   - Multiply the embedding $E$ by a large learned weight matrix $W_{up}$ and add a bias $B_{up}$.  
+   - Expands the vector into a much higher-dimensional space (e.g., 4× the embedding size in GPT‑3).  
+   - Each row can be thought of as asking: *Does this embedding contain feature X?*  
+   - Produces an intermediate vector of "neuron activations".  
+
+2. **Non-Linearity (ReLU or GELU)**  
+   - Apply an elementwise non-linear function.  
+   - ReLU maps negative values to 0 and keeps positives unchanged.  
+   - Acts like an **AND gate**, only triggering when certain combinations of features are present.  
+   - Example: One neuron could activate only when the embedding encodes both “Michael” and “Jordan”.  
+
+3. **Down Projection (Compression)**  
+   - Multiply by another learned matrix $W_{down}$ and add bias $B_{down}$.  
+   - Projects back to the original embedding dimension.  
+   - Columns of $W_{down}$ can be thought of as **directions to add back into the embedding** when the corresponding neuron fires.  
+   - Example: The neuron triggered by “Michael Jordan” could add the *basketball* direction.  
+
+4. **Residual Connection**  
+   - The output is added back to the original embedding, refining it while preserving context.  
+
+---
+
+### How Facts Can Be Stored  
+- Assume there are specific high-dimensional directions for **Michael**, **Jordan**, and **basketball**.  
+- The MLP can learn:  
+  - Detect when an embedding encodes both Michael + Jordan (via $W_{up}$ and ReLU).  
+  - Activate a neuron that adds the basketball direction (via $W_{down}$).  
+- Result: The output embedding carries the encoded fact that *Michael Jordan plays basketball*.  
+
+
+---
+
+### Superposition  
+A natural question: does each neuron cleanly represent a feature like *Michael Jordan*?  
+Evidence suggests the answer is **no** — and that’s actually beneficial.  
+
+- **Key Idea**: In high dimensions, you can store far more features if you allow them to overlap slightly.  
+- This is called **superposition**: features are stored as combinations of neurons rather than isolated ones.  
+
+**Why it works**  
+- In an n-dimensional space, you can fit only n perfectly perpendicular directions.  
+- But if you allow directions to be *nearly* perpendicular (e.g., 89–91°)
+- The number of vectors you can cram into a space that are nearly perpendicular grows exponentially with the number of dimensions.
+- The Johnson–Lindenstrauss lemma shows that high-dimensional spaces can pack huge numbers of nearly-orthogonal vectors.  
+
+**Example**  
+- In a 100-dimensional space, you can randomly generate 10,000 vectors that are all close to perpendicular.  
+- With optimization, they can span many thousands of features while remaining almost independent.  
+features**.  
+- Features are distributed across combinations of neurons, not isolated units.  
+- This explains both why LLMs scale so well and why their internals are hard to interpret.  
+
+Researchers often use **sparse autoencoders** to uncover these hidden superposed features.  
+
+---
+
+### Summary  
+- **MLPs** in transformers are the main storage for knowledge and facts.  
+- Each block uses:  
+  - Up Projection → Non-Linearity → Down Projection → Residual Connection.  
+- **Parameter count**: ~116 billion in GPT‑3, making them the largest part of the model.  
+- **Superposition** allows packing far more features into the network than its raw dimensionality suggests.  
 
 
 ---
@@ -307,12 +382,12 @@ Below is the running tally based on what we’ve covered so far.
 | Component              | Description                                     | Parameters (approx.) |
 |------------------------|-------------------------------------------------|----------------------|
 | **Embedding Matrix ($W_E$)** | Maps tokens (50,257 vocab × 12,288 d_embed) into vectors | 617,558,016 |
-| **Attention Blocks**   | Self-attention layers (multi-head)              |  |
+| **Attention Blocks**   | Self-attention layers (multi-head)              | ~1/3 of parameters |
 | **Key** | d_query * d_embed * n_heads * n_layers (128 * 12,288 * 96 * 96) | 14,495,514,624 |
 | **Query** | d_query * d_embed * n_heads * n_layers (128 * 12,288 * 96 * 96) | 14,495,514,624 |
 | **Value** | d_value * d_embed * n_heads * n_layers (128 * 12,288 * 96 * 96) | 14,495,514,624 |
 | **Output** | d_value * d_embed * n_heads * n_layers (128 * 12,288 * 96 * 96) | 14,495,514,624 |
-| **Feed-Forward Layers (MLPs)** | Dense transformations per token             |  |
+| **Feed-Forward Layers (MLPs)** | Dense transformations per token             | ~2/3 of parameters |
 | **Up-projection** | n_neurons * d_embed * n_layers ( 49,152 * 12,288 * 96 )| 57,982,058,496 |
 | **Down-projection** | n_neurons * d_embed * n_layers ( 49,152 * 12,288 * 96 )| 57,982,058,496 |
 | **Unembedding Matrix ($W_U$)** | Maps final hidden state back to vocabulary logits   | 617,558,016 |
