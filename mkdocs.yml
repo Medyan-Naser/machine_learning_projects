@@ -7,6 +7,7 @@ nav:
   - Model: optimizers.md
   - CNN: CNN.md
   - 3B1B: 3Blue1Brown.md
+  - LLM: LLM.md
 
 theme:
   name: material
