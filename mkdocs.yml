@@ -2,7 +2,9 @@ site_name: ML & AI Knowledge Hub
 
 nav:
   - Home: index.md
-  - Libraries: libraries.md
+  - Libraries: 
+    - All: libraries.md
+    - Torch: torch.md
   - Methods: methods.md
   - Optimizers: optimizers.md
   - CNN: CNN.md
