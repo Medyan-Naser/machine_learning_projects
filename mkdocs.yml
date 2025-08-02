@@ -10,6 +10,7 @@ nav:
   - CNN: CNN.md
   - 3B1B: 3Blue1Brown.md
   - LLM: LLM.md
+  - AF: activation_functions.md
 
 theme:
   name: material
