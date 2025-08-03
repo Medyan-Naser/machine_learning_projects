@@ -104,9 +104,22 @@ $$
 \sigma(z)_i = \frac{e^{z_i}}{\sum_{j=1}^{K} e^{z_j}}, \quad i=1,\dots,K
 $$
 
+**With Temperature:**  
+
+$$
+\sigma_T(z)_i = \frac{e^{z_i / T}}{\sum_{j=1}^{K} e^{z_j / T}}, \quad i=1,\dots,K
+$$
+
 **Info:**
+
 - Used in the **output layer** for multi-class classification
-- Converts logits to probability distribution
+- Converts logits to a probability distribution
+- **Temperature \(T\):**
+    - \(T < 1\): Sharper distribution (more confident, close to always picking the max)
+    - \(T > 1\): Flatter distribution (more random, allows exploration)
+    - \(T \to 0\): Greedy (always top probability)
+    - \(T \to \infty\): Approaches uniform distribution
+
 
 **Graph:**  
 TODO

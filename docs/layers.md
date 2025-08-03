@@ -28,6 +28,7 @@ Keras provides many layer types you can add to neural networks. Each serves a sp
     - Randomly drops a fraction of neurons during training.
     - Prevents overfitting by forcing redundancy.
     - Example: Dropout(0.5) drops 50% of neurons.
+    - Dropout is less common in convolutional layers due to the spatial dependencies in image data.
 - BatchNormalization
     - Normalizes activations across a batch.
     - Speeds up training, improves stability.
