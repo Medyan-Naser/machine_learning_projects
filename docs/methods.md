@@ -28,7 +28,17 @@ Note: can be used for Classification and Regression
 - Random Forests: Combines many decision trees to reduce overfitting and improve accuracy.
 - Gradient Boosting (XGBoost, LightGBM, CatBoost): Builds trees sequentially, correcting previous errors for high accuracy.
 
+### Validation
+**Purpose:**  
+Validation is used to evaluate and tune models during training, ensuring they generalize well to unseen data.  
+It helps prevent overfitting and guides hyperparameter selection.
 
+**Difference from Training vs Testing:**
+
+- **Training set:** Used to learn model parameters (weights).
+- **Validation set:** Used to tune hyperparameters, compare models, and decide when to stop training (early stopping).
+- **Test set:** Used only once at the end to report unbiased performance. The test set must remain untouched until final evaluation.
+- If data is limited, use **k-fold cross-validation** to maximize training efficiency.
 
 ## 2. Unsupervised Learning
 In unsupervised learning, the algorithm learns from unlabeled data, discovering patterns or groups.

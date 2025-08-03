@@ -84,6 +84,37 @@ The goal:
 - Shear: Skew image along an axis.
 - Noise: Add random noise for robustness.
 
+## Data Transforms
+
+In PyTorch, `torchvision.transforms` are used to preprocess and augment image data before feeding it into a model.
+
+**Example**
+```python
+from torchvision import transforms
+
+transform = transforms.Compose([
+    transforms.Resize((64, 64)),                       # Resize images to 64x64
+    transforms.ToTensor(),                             # Convert PIL Image to PyTorch Tensor
+    transforms.Normalize((0.5, 0.5, 0.5),              # Normalize with mean
+                         (0.5, 0.5, 0.5))              # and standard deviation
+])
+```
+
+## Common Transforms
+
+- `Resize((H, W))`: Resizes image to target dimensions.  
+- `ToTensor()`: Converts an image to a Tensor and scales pixel values from [0,255] to [0,1].  
+- `Normalize(mean, std)`: Standardizes tensor values:  
+  $$
+  x_{norm} = \frac{x - mean}{std}
+  $$
+- `RandomHorizontalFlip()`: Flips the image horizontally with a given probability.  
+- `RandomRotation(degrees)`: Rotates image randomly within given degree range.  
+- `ColorJitter()`: Randomly changes brightness, contrast, saturation, and hue.  
+
+**Tip:** Combine multiple transforms with `transforms.Compose()` to create a preprocessing pipeline for your dataset.
+
+
 ## Diffusion Models
 
 Diffusion models are generative deep learning models that create new data (such as images or audio) by reversing a step-by-step noise process.
@@ -162,3 +193,38 @@ for epoch in range(epochs):
     noise = tf.random.normal((batch_size, 100))
     gan.train_on_batch(noise, [1]*batch_size)
 ```
+
+## Transformers
+
+Transformers are deep learning architectures originally designed for sequence modeling tasks like language understanding and generation.  
+They have since been adapted for vision, audio, and multimodal tasks.
+
+Unlike CNNs or RNNs, Transformers rely on **self-attention** to model relationships between all elements in an input sequence at once.
+
+### Core Concepts
+
+- **Self-Attention**: Calculates the importance of each token (or patch, in vision) relative to others.
+- **Positional Encoding**: Adds information about the order of tokens since Transformers have no inherent sequence structure.
+- **Multi-Head Attention**: Uses multiple attention heads to capture different relationships.
+- **Feedforward Layers**: Applies fully connected layers after attention for further processing.
+- **Layer Normalization + Residuals**: Stabilizes training and allows deep stacking.
+
+### Key Use Cases
+
+- **NLP**: Translation, summarization, question answering (e.g., BERT, GPT).
+- **Vision (ViT)**: Image classification by dividing images into patches and treating them like token sequences.
+- **Multimodal Models**: Combine text, vision, and audio (e.g., CLIP, Flamingo).
+
+### Vision Transformer (ViT)
+
+- Splits an image into fixed-size patches.
+- Flattens and embeds each patch like a token.
+- Processes with a standard Transformer encoder.
+- Final output is used for classification or other tasks.
+
+**Why Transformers Matter**
+
+- No inductive bias toward local structure (unlike CNNs), so they require more data but can learn global context better.
+- Scalable to very large models and datasets.
+- State-of-the-art across NLP and increasingly common in vision and audio.
+
