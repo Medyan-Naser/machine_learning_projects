@@ -91,3 +91,50 @@
   - Optimized for conversational interaction.  
 
 ---
+
+
+## Tokenization in NLP
+
+- **Definition**: The process of splitting text into smaller pieces (tokens) for model input.  
+- **Types of Tokenization**:  
+  - **Word-based**: Each word is a token. Preserves meaning but increases vocabulary size.  
+  - **Character-based**: Splits into characters. Small vocabulary but less semantic meaning.  
+  - **Subword-based**: Keeps common words whole, splits rare words into subwords. Balances vocabulary size and meaning.  
+
+- **Popular Tokenizers**:  
+  - **WordPiece** (used in BERT) → splits words based on frequency and meaning.  
+  - **Unigram / SentencePiece** (used in XLNet) → breaks text into subwords, assigning IDs.  
+
+- **Practical Notes**:  
+  - Tools like **NLTK**, **spaCy**, and **torchtext** support tokenization.  
+  - Special tokens such as **[BOS]** (beginning of sentence) and **[EOS]** (end of sentence) help models understand sequence boundaries.  
+  - Padding tokens ensure uniform input lengths for training.  
+
+
+---
+
+## Data Loaders in Generative AI
+
+- **Definition**: A tool that efficiently prepares and loads data for training models.  
+- **Purpose**:  
+  - Handles **batching** (grouping samples together).  
+  - Supports **shuffling** to avoid order-based learning.  
+  - Enables **on-the-fly pre-processing** to optimize memory.  
+
+- **In PyTorch**:  
+  - Built using the **`torch.utils.data.DataLoader`** class.  
+  - Works with custom **Dataset** classes defining `__init__`, `__len__`, and `__getitem__`.  
+  - Integrates seamlessly into training pipelines.  
+
+- **Batch Processing**:  
+  - Ensures consistent input sizes with **padding** (`pad_sequence`).  
+  - **`batch_first=True`** → batch size is the first dimension.  
+  - Common transformations in batches:  
+    - Tokenization  
+    - Numericalization (mapping tokens to indices)  
+    - Tensor conversion  
+
+- **Collate Function**:  
+  - Customizable function applied during batching.  
+  - Handles tokenization, padding, and tensor creation without altering the raw dataset.  
+
