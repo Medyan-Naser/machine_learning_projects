@@ -247,3 +247,15 @@ print(f"Test Accuracy: {test_accuracy * 100:.2f}%")
 ---
 
 ✅ In essence, the training loop is an optimization cycle where predictions improve step by step through feedback from the loss function.
+
+
+---
+
+# Pytorch
+
+A dynamic computation graph means that the network's structure can change on the fly during execution, allowing for more intuitive and flexible model development. 
+This feature is helpful in advanced NLP applications where the neural network architecture needs to adapt dynamically to varying inputs.
+
+## Dynamic computation graphs (Autograd)
+
+PyTorch's Autograd system allows dynamic changes to the network during training, enhancing flexibility and easing the development process. This adaptability is particularly beneficial for research and experimentation.

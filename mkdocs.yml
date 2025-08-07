@@ -5,12 +5,14 @@ nav:
   - Libraries: 
     - All: libraries.md
     - Torch: torch.md
+    - Keras: keras.md
   - Methods: methods.md
   - Optimizers: optimizers.md
   - CNN: CNN.md
   - 3B1B: 3Blue1Brown.md
   - LLM: LLM.md
   - AF: activation_functions.md
+  - GenAI: GenAI.md
 
 theme:
   name: material
