@@ -66,7 +66,9 @@ Used to reduce the number of input features while retaining most information.
 ### Neural Networks & Deep Learning
 - Feedforward Neural Networks (FNNs): Layers of neurons mapping inputs to outputs.
 - Convolutional Neural Networks (CNNs): Specially designed for images and spatial data.
-- Recurrent Neural Networks (RNNs) & LSTMs: Handle sequential data such as text or time series.
+- Recurrent Neural Networks (RNNs): Designed for sequential data (e.g., text, speech, time series). They maintain a memory of previous inputs via hidden states but suffer from vanishing gradient problems for long sequences.
+- Long Short-Term Memory Networks (LSTMs): A type of RNN that uses gates to manage memory, allowing it to capture long-term dependencies and mitigate vanishing gradients.
+- Gated Recurrent Units (GRUs):A simplified version of LSTMs with fewer gates. Often perform comparably with fewer parameters and faster training.
 - Transformers: State-of-the-art models for NLP and vision tasks.
 
 ### Reinforcement Learning (RL)
