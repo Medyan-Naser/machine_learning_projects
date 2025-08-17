@@ -52,6 +52,22 @@ In unsupervised learning, the algorithm learns from unlabeled data, discovering 
 ### Association Rule Learning (Important)
 - Apriori / FP-Growth: Finds frequent itemsets and rules in transactional data (e.g., market basket analysis).
 
+### Temporal Clustering
+- Unsupervised clustering that groups data based on **feature similarity and temporal proximity**.
+- Useful for **time-series data, logs, or events** where patterns occur in bursts.
+- Works by combining feature similarity with **time-based distance** in clustering algorithms (e.g., DBSCAN with time as a dimension).
+- Automatically identifies **temporal patterns** and **event clusters** without specifying the number of clusters.
+
+### Anomaly Detection
+- Isolation Trees: Randomly split features to isolate individual data points. Anomalies are isolated faster (shorter path lengths) because they lie in sparse regions.
+- Isolation Forests: An ensemble of isolation trees. The average path length of a point across many trees indicates its likelihood of being an anomaly. Shorter average path length = higher chance of being an outlier.
+
+### SPELL (Using Longest Common Subsequence)
+- Unsupervised method for clustering **sequences of events** based on **temporal similarity**.
+- Uses **Longest Common Subsequence (LCS)** to measure similarity between sequences: sequences with longer shared subsequences are considered more similar.
+- Constructs a **graph of sequences** connected by similarity and forms clusters from dense regions; sparse sequences are treated as anomalies.
+- Useful for **log analysis, process mining, and detecting anomalous temporal patterns**.
+
 ## 3. Dimensionality Reduction / Feature Extraction
 Used to reduce the number of input features while retaining most information.
 

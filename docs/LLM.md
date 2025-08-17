@@ -186,13 +186,41 @@ Example:
 
 ## 9. Encoder vs Decoder Transformers
 
-- **Encoder–Decoder Models** (e.g., T5, BERT):  
-  - Encoder reads input; decoder generates output.  
-  - Used in translation, summarization.  
+Transformers can be built using **encoders**, **decoders**, or both. The choice determines whether a model is better at *understanding* or *generating* language.
 
-- **Decoder-Only Models** (e.g., GPT):  
-  - Focused on **autoregressive text generation**.  
-  - Most common for chatbots.
+### Encoder-Only Models (e.g., BERT)
+- **Architecture:** Based only on the Transformer **encoder**.
+- **Attention:** Fully bidirectional – each token can attend to tokens both before and after it.
+- **Training Objective:** Masked Language Modeling (MLM), where random words are masked and predicted from context. Original BERT also used Next Sentence Prediction (NSP) to learn sentence relationships.
+- **Strength:** Excellent at *understanding language* by learning deep contextual embeddings.
+- **Common Use Cases:**
+    - Text classification (e.g., sentiment, intent detection)
+    - Named Entity Recognition (NER)
+    - Question Answering (extractive QA)
+    - Semantic similarity and search
+
+### Decoder-Only Models (e.g., GPT)
+- **Architecture:** Based only on the Transformer **decoder**.
+- **Attention:** Unidirectional (causal) – each token can only attend to tokens **before** it.
+- **Training Objective:** Autoregressive Language Modeling, predicting the next word given the sequence so far.
+- **Strength:** Excellent at *generating coherent language* by extending text naturally.
+- **Common Use Cases:**
+    - Chatbots and conversational AI
+    - Text generation (stories, code, articles)
+    - Summarization and translation (when fine-tuned)
+    - Autocomplete systems
+
+### Encoder–Decoder Models (e.g., T5, BART)
+- Combine an **encoder** (understanding input) and a **decoder** (generating output).
+- More flexible, suitable for tasks that require both comprehension and generation.
+- **Common Use Cases:** Translation, abstractive summarization, text-to-text tasks.
+
+---
+
+### 🔑 Key Takeaway
+- **BERT (encoder-only)** → Best for **understanding** tasks where meaning must be extracted.
+- **GPT (decoder-only)** → Best for **generation** tasks where fluent text must be produced.
+- **T5/BART (encoder–decoder)** → Best for **hybrid tasks** like translation and summarization.
 
 ---
 
