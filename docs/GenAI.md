@@ -440,6 +440,7 @@ Encoder–decoder architectures extend sequence-to-sequence models so that the i
    - `hid_dim`: size of hidden and cell states.  
    - `dropout`: regularization to improve generalization.
 3. Only the hidden and cell states are passed to the decoder — the output vectors are discarded.
+4. **Self-Attention (if Transformer-based encoder, depends on the model)**: Uses **unmasked self-attention**, so each token can access **all tokens in the sequence**, including future words.
 
 > **Note:** Unlike GRUs, which have only a hidden state, LSTMs also maintain a **cell state**.
 
@@ -449,6 +450,7 @@ Encoder–decoder architectures extend sequence-to-sequence models so that the i
 3. **Linear layer**: Maps LSTM output to the vocabulary size (`output_dim`).
 4. **Softmax activation**: Produces a probability distribution over the vocabulary.
 5. Operates **autoregressively**, using its own previous predictions or ground-truth tokens (teacher forcing).
+6. **Limitation**: Maximum context size constrains the number of tokens the decoder can process at once, limiting long-range dependencies.
 
 **Decoder parameters**:
 - `output_dim`: target vocabulary size.
