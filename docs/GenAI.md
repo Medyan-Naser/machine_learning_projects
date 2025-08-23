@@ -296,11 +296,32 @@ N-gram models predict the next word using a fixed-size context of previous words
 
 ---
 
+## GloVe (Global Vectors for Word Representation)
+
+### 1. Overview
+- **GloVe** is a word embedding method developed at Stanford.
+- Learns embeddings from **global co-occurrence statistics** across a large corpus.
+- Captures semantic relationships similar to Word2Vec:
+    - *king* − *man* + *woman* ≈ *queen*
+
+### 2. How It Works
+- Builds a **co-occurrence matrix**: how often each word appears near another.
+- Factorizes this matrix to learn embeddings where similarity reflects meaning.
+- Unlike Word2Vec’s predictive training, GloVe is **count-based** and global.
+
+### 3. Key Benefits
+- Embeddings reflect both local and global word statistics.
+- Pre-trained GloVe vectors (Wikipedia, Common Crawl) are widely available.
+- Can be used directly or fine-tuned for NLP tasks.
+
+---
+
 ## Summary
 - **Word2Vec**: Framework for learning dense word embeddings.
 - **CBOW**: Predicts a target word from its context; efficient for frequent words.
 - **Skip-Gram**: Predicts context words from a target; better for rare words.
 - **Pre-Trained Embeddings**: Use large-scale pre-learned vectors (like GloVe) to improve model accuracy and training speed.
+- **GloVe**: Learns embeddings from global co-occurrence statistics, combining the strengths of count-based and predictive models.
 
 ---
 
