@@ -130,15 +130,24 @@ Transformers refine embeddings layer by layer.
 1. **Tokenization** → Break input into tokens.  
 2. **Embedding Layer** → Map tokens into vectors.  
 3. **Positional Encoding** → Add order information.  
+    - Transformers have no built-in notion of word order, so **positional encoding** injects sequence position into embeddings.  
+    - Typically uses **sine and cosine functions** of different frequencies:
+      $$
+      PE_{(pos, 2i)} = \sin\left(\frac{pos}{10000^{2i/d_{model}}}\right), \quad
+      PE_{(pos, 2i+1)} = \cos\left(\frac{pos}{10000^{2i/d_{model}}}\right)
+      $$
+      where `pos` is the token position and `i` is the embedding dimension index.  
+    - These vectors are **added to the word embeddings**, so each token vector contains both meaning and position.  
+    - Can also be implemented as **learnable parameters**, allowing the model to optimize positional information during training.
 4. **Self-Attention Block**  
-   - Attention updates embeddings based on context, enabling precise meaning.
-   - It allows information transfer between distant tokens
-   - Formula:
-     $$
-     \text{Attention}(Q,K,V) = 
-     \text{softmax}\!\left(\frac{QK^T}{\sqrt{d_k}}\right)V
-     $$
-   - Multi-head attention captures different relationships.  
+    - Attention updates embeddings based on context, enabling precise meaning.
+    - It allows information transfer between distant tokens
+    - Formula:
+      $$
+      \text{Attention}(Q,K,V) = 
+      \text{softmax}\\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+      $$
+    - Multi-head attention captures different relationships.  
 5. **Feed-Forward Block (MLP)** → Independent nonlinear transformations.  
 6. **Stacking Layers** → Repeat attention + MLP many times.  
 7. **Final Vector** → Context-rich representation.  
@@ -261,7 +270,13 @@ Transformers extend far beyond text:
 
 
 ### Core Idea  
-Attention allows the model to determine **which tokens in a sequence should influence each other** when building contextual meaning. Instead of treating each word embedding in isolation, attention selectively passes information between tokens based on their relevance.  
+Attention allows the model to determine **which tokens in a sequence should influence each other** when building contextual meaning. Instead of treating each word embedding in isolation, attention selectively passes information between tokens based on their relevance.
+
+- Formula:
+  $$
+  \text{Attention}(Q,K,V) = 
+  \text{softmax}\\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+  $$
 
 ---
 
@@ -306,6 +321,17 @@ Here $d_k$ is the dimension of the key/query space, added for numerical stabilit
   - Another detects long-range references (e.g., *Harry* + *wizard* → *Harry Potter*).  
 - Outputs from all heads are concatenated and transformed by an output matrix.  
 - GPT‑3 uses **96 heads per block**.  
+
+---
+
+### Self-Attention vs Cross-Attention
+- **Self-Attention:** Each token attends to other tokens in the same sequence. Captures intra-sequence relationships.  
+- **Cross-Attention:** Tokens in one sequence (e.g., decoder input) attend to tokens in another sequence (e.g., encoder output). Integrates information across sequences.  
+
+### How Single-Head and Multi-Head Fit
+- **Single-Head Attention:** Computes one attention pattern at a time; basic building block.  
+- **Multi-Head Attention:** Combines multiple heads in parallel; each head captures a different type of relationship. Concatenated outputs give richer contextual embeddings.  
+- Self-attention or cross-attention can each use **single-head or multi-head** setups depending on model design.
 
 ---
 
