@@ -9,8 +9,13 @@ BERT is an **encoder-only Transformer model** designed to deeply understand lang
 - **Transformer Encoder Only:** Uses stacked self-attention layers.  
 - **Bidirectional Attention:** Each token can attend to all other tokens in the input sequence.  
 - **Input Representation:**
-    - Tokens are represented using **token embeddings**, **segment embeddings**, and **positional embeddings**.
-    - Input format includes `[CLS]` at the start (for classification tasks) and `[SEP]` to separate sentences.
+  - Tokens are represented using **token embeddings**, **positional embeddings**, and **segment embeddings**.
+  - **Segment Embeddings:**  
+    - Indicate which sentence a token belongs to (Sentence A or Sentence B).  
+    - Important for **Next Sentence Prediction (NSP)** and sentence-pair tasks.  
+    - Typically, Sentence A tokens get embedding `E_A = 0`, Sentence B tokens get `E_B = 1`.  
+    - Combined with token and positional embeddings to produce the final input vector for each token.
+  - Input format includes `[CLS]` at the start (for classification tasks) and `[SEP]` to separate sentences.
 
 **Example:**  
 Input: `"The cat sat on the mat."`  

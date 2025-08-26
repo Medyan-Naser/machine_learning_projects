@@ -97,18 +97,18 @@
 
 - **Definition**: The process of splitting text into smaller pieces (tokens) for model input.  
 - **Types of Tokenization**:  
-  - **Word-based**: Each word is a token. Preserves meaning but increases vocabulary size.  
-  - **Character-based**: Splits into characters. Small vocabulary but less semantic meaning.  
-  - **Subword-based**: Keeps common words whole, splits rare words into subwords. Balances vocabulary size and meaning.  
+    - **Word-based**: Each word is a token. Preserves meaning but increases vocabulary size.  
+    - **Character-based**: Splits into characters. Small vocabulary but less semantic meaning.  
+    - **Subword-based**: Keeps common words whole, splits rare words into subwords. Balances vocabulary size and meaning.  
 
 - **Popular Tokenizers**:  
-  - **WordPiece** (used in BERT) → splits words based on frequency and meaning.  
-  - **Unigram / SentencePiece** (used in XLNet) → breaks text into subwords, assigning IDs.  
+    - **WordPiece** (used in BERT) → splits words based on frequency and meaning.  
+    - **Unigram / SentencePiece** (used in XLNet) → breaks text into subwords, assigning IDs.  
 
 - **Practical Notes**:  
-  - Tools like **NLTK**, **spaCy**, and **torchtext** support tokenization.  
-  - Special tokens such as **[BOS]** (beginning of sentence) and **[EOS]** (end of sentence) help models understand sequence boundaries.  
-  - Padding tokens ensure uniform input lengths for training.  
+    - Tools like **NLTK**, **spaCy**, and **torchtext** support tokenization.  
+    - Special tokens such as **[BOS]** (beginning of sentence) and **[EOS]** (end of sentence) help models understand sequence boundaries.  
+    - Padding tokens ensure uniform input lengths for training.  
 
 
 ---
@@ -436,9 +436,9 @@ Encoder–decoder architectures extend sequence-to-sequence models so that the i
 ### Encoder Internals
 1. **Embedding layer**: Converts each input token into an embedding vector.
 2. **LSTM layer**: Processes embeddings to produce hidden and cell states.  
-   - `n_layers`: number of recurrent layers.  
-   - `hid_dim`: size of hidden and cell states.  
-   - `dropout`: regularization to improve generalization.
+    - `n_layers`: number of recurrent layers.  
+    - `hid_dim`: size of hidden and cell states.  
+    - `dropout`: regularization to improve generalization.
 3. Only the hidden and cell states are passed to the decoder — the output vectors are discarded.
 4. **Self-Attention (if Transformer-based encoder, depends on the model)**: Uses **unmasked self-attention**, so each token can access **all tokens in the sequence**, including future words.
 

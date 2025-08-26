@@ -2,20 +2,22 @@ site_name: ML & AI Knowledge Hub
 
 nav:
   - Home: index.md
+  - Activation Functions: DeepLearning/activation_functions.md
   - Libraries: 
     - All: Libraries/libraries.md
     - Torch: Libraries/torch.md
     - Keras: Libraries/keras.md
   - Methods: Libraries/methods.md
   - Optimizers: DeepLearning/optimizers.md
+  - Layers: DeepLearning/layers.md
   - CNN: DeepLearning/CNN.md
-  - 3B1B: 3Blue1Brown.md
   - LLM:
     - Overview: LLM/LLM.md
     - BERT: LLM/BERT.md
-  - AF: DeepLearning/activation_functions.md
+    - NER: LLM/NER.md
   - GenAI: GenAI.md
-  - Layers: DeepLearning/layers.md
+  - Extra:
+    - 3B1B: 3Blue1Brown.md
 
 theme:
   name: material

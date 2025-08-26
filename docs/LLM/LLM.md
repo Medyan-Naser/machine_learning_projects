@@ -361,25 +361,25 @@ While attention gets most of the attention, a **majority of the model’s parame
 Each MLP block processes each token embedding independently:  
 
 1. **Up Projection (Expansion)**  
-   - Multiply the embedding $E$ by a large learned weight matrix $W_{up}$ and add a bias $B_{up}$.  
-   - Expands the vector into a much higher-dimensional space (e.g., 4× the embedding size in GPT‑3).  
-   - Each row can be thought of as asking: *Does this embedding contain feature X?*  
-   - Produces an intermediate vector of "neuron activations".  
+    - Multiply the embedding $E$ by a large learned weight matrix $W_{up}$ and add a bias $B_{up}$.  
+    - Expands the vector into a much higher-dimensional space (e.g., 4× the embedding size in GPT‑3).  
+    - Each row can be thought of as asking: *Does this embedding contain feature X?*  
+    - Produces an intermediate vector of "neuron activations".  
 
 2. **Non-Linearity (ReLU or GELU)**  
-   - Apply an elementwise non-linear function.  
-   - ReLU maps negative values to 0 and keeps positives unchanged.  
-   - Acts like an **AND gate**, only triggering when certain combinations of features are present.  
-   - Example: One neuron could activate only when the embedding encodes both “Michael” and “Jordan”.  
+    - Apply an elementwise non-linear function.  
+    - ReLU maps negative values to 0 and keeps positives unchanged.  
+    - Acts like an **AND gate**, only triggering when certain combinations of features are present.  
+    - Example: One neuron could activate only when the embedding encodes both “Michael” and “Jordan”.  
 
 3. **Down Projection (Compression)**  
-   - Multiply by another learned matrix $W_{down}$ and add bias $B_{down}$.  
-   - Projects back to the original embedding dimension.  
-   - Columns of $W_{down}$ can be thought of as **directions to add back into the embedding** when the corresponding neuron fires.  
-   - Example: The neuron triggered by “Michael Jordan” could add the *basketball* direction.  
+    - Multiply by another learned matrix $W_{down}$ and add bias $B_{down}$.  
+    - Projects back to the original embedding dimension.  
+    - Columns of $W_{down}$ can be thought of as **directions to add back into the embedding** when the corresponding neuron fires.  
+    - Example: The neuron triggered by “Michael Jordan” could add the *basketball* direction.  
 
 4. **Residual Connection**  
-   - The output is added back to the original embedding, refining it while preserving context.  
+    - The output is added back to the original embedding, refining it while preserving context.  
 
 ---
 
