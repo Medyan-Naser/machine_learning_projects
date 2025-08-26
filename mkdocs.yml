@@ -15,7 +15,14 @@ nav:
     - Overview: LLM/LLM.md
     - BERT: LLM/BERT.md
     - NER: LLM/NER.md
-  - GenAI: GenAI.md
+  - GenAI:
+    - Overview: GenAI/GenAI.md
+    - Tokenization: GenAI/tokenization.md
+    - NGrams: GenAI/ngrams.md
+    - Word_Embeddings: GenAI/embeddings.md
+    - Seq2Seq_RNNs: GenAI/seq2seq_rnn.md
+    - Metrics: GenAI/metrics.md
+    - Transformers: GenAI/transformers.md
   - Extra:
     - 3B1B: 3Blue1Brown.md
 
