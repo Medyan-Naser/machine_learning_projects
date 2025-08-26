@@ -11,10 +11,6 @@ nav:
   - Optimizers: DeepLearning/optimizers.md
   - Layers: DeepLearning/layers.md
   - CNN: DeepLearning/CNN.md
-  - LLM:
-    - Overview: LLM/LLM.md
-    - BERT: LLM/BERT.md
-    - NER: LLM/NER.md
   - GenAI:
     - Overview: GenAI/GenAI.md
     - Tokenization: GenAI/tokenization.md
@@ -23,6 +19,10 @@ nav:
     - Seq2Seq_RNNs: GenAI/seq2seq_rnn.md
     - Metrics: GenAI/metrics.md
     - Transformers: GenAI/transformers.md
+  - LLM:
+    - Overview: LLM/LLM.md
+    - BERT: LLM/BERT.md
+    - NER: LLM/NER.md
   - Extra:
     - 3B1B: 3Blue1Brown.md
 

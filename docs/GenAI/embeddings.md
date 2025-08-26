@@ -12,7 +12,21 @@ Before using text in an NLP or GenAI model, it must be converted into numerical 
 - Aggregates one-hot vectors for all tokens in a document by summing or averaging.  
 - Ignores word order; useful for basic text classification.
 
-### 3. Embedding
+### 3. TF-IDF (Term Frequency–Inverse Document Frequency)
+- Assigns a **weight to each word** based on its importance in a document relative to the dataset.
+- **TF (Term Frequency)**: Measures how often a word appears in a document.  
+- **IDF (Inverse Document Frequency)**: Downweights common words across documents.  
+
+- **TF-IDF Score**: Combines TF and IDF to highlight informative words:  
+  $$
+  \text{TF-IDF(word, doc)} = \text{TF(word, doc)} \times \log \frac{\text{Total Documents}}{1 + \text{Documents containing word}}
+  $$
+
+- Commonly used for **information retrieval**, **text classification**, and **feature extraction** before embeddings became standard.  
+- **Note:** TF-IDF is sparse and high-dimensional, similar to Bag-of-Words, but more informative because it considers dataset-level importance.
+
+
+### 4. Embedding
 - Dense, low-dimensional vector for each token (learned during training).  
 - Stored in an **embedding matrix**:  
     - Rows = tokens  
@@ -21,7 +35,7 @@ Before using text in an NLP or GenAI model, it must be converted into numerical 
 - When using BoW as input, the hidden layer output is the sum of embeddings for present tokens.  
 - **Modern NLP approach:** Embeddings are the standard replacement for one-hot encoding.
 
-### 4. Embedding Bag
+### 5. Embedding Bag
 - Directly takes token indexes and outputs the **sum or average** of their embeddings in one step.  
 - More efficient than manually summing/averaging.  
 - Supports an offset parameter to indicate document boundaries when input is a flat list of token IDs.
@@ -123,7 +137,7 @@ Before using text in an NLP or GenAI model, it must be converted into numerical 
 
 ### 1. Overview
 - **GloVe** is a word embedding method developed at Stanford.
-- Learns embeddings from **global co-occurrence statistics** across a large corpus.
+- Learns embeddings from **global co-occurrence statistics** across a large dataset.
 - Captures semantic relationships similar to Word2Vec:
     - *king* − *man* + *woman* ≈ *queen*
 
