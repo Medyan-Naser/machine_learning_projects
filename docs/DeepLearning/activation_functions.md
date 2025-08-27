@@ -17,7 +17,7 @@ $$
 - Problems: vanishing gradients, slow convergence
 
 **Graph:**  
-<img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Logistic-curve.svg" width="350">
+![Sigmoid](../assets/activation_functions/sigmoid.avif)
 
 ---
 
@@ -33,8 +33,8 @@ $$
 - Zero-centered (better than sigmoid)
 - Still can suffer from vanishing gradients
 
-**Graph:**  
-<img src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Activation_tanh.svg" width="350">
+**Graph:** 
+![Tanh](../assets/activation_functions/tanh.avif)
 
 ---
 
@@ -51,14 +51,14 @@ $$
 - Efficient and helps avoid vanishing gradients
 - Risk: "dying ReLU" (neurons stuck at 0)
 
-**Graph:**  
-<img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Rectifier_and_softplus_functions.svg" width="350">
+**Graph:** 
+![ReLU](../assets/activation_functions/ReLU.avif)
 
 ---
 
 ## 4. Leaky ReLU
 
-**Formula:**  
+**Formula:**
 $$
 f(x) =
 \begin{cases}
@@ -71,8 +71,8 @@ $$
 - Small negative slope ($\alpha$) to avoid dying ReLU
 - Common $\alpha = 0.01$
 
-**Graph:**  
-<img src="https://upload.wikimedia.org/wikipedia/commons/a/ae/Activation_prelu.svg" width="350">
+**Graph:**
+![Leaky ReLU](../assets/activation_functions/leaky_ReLU.avif)
 
 ---
 
@@ -91,8 +91,8 @@ $$
 - Similar to Leaky ReLU but smoother
 - Better convergence in some cases
 
-**Graph:**  
-TODO
+**Graph:**
+![ELU](../assets/activation_functions/ELU.avif)
 
 ---
 
@@ -121,8 +121,8 @@ $$
     - \(T \to \infty\): Approaches uniform distribution
 
 
-**Graph:**  
-TODO
+**Graph:**
+![Softmax](../assets/activation_functions/softmax.avif)
 
 ---
 
