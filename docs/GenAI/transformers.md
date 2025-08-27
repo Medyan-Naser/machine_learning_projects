@@ -45,6 +45,8 @@ Transformers can be built using **encoders**, **decoders**, or both. The choice 
     - Question Answering (extractive QA)
     - Semantic similarity and search
 
+![Encoder](../assets/transformers/Encoder.png)
+
 ### Decoder-Only Models (e.g., GPT)
 - **Architecture:** Based only on the Transformer **decoder**.
 - **Attention:** Unidirectional (causal) – each token can only attend to tokens **before** it.
@@ -56,10 +58,14 @@ Transformers can be built using **encoders**, **decoders**, or both. The choice 
     - Summarization and translation (when fine-tuned)
     - Autocomplete systems
 
+![Decoder](../assets/transformers/decoder.png)
+
 ### Encoder–Decoder Models (e.g., T5, BART)
 - Combine an **encoder** (understanding input) and a **decoder** (generating output).
 - More flexible, suitable for tasks that require both comprehension and generation.
 - **Common Use Cases:** Translation, abstractive summarization, text-to-text tasks.
+
+![Transformer](../assets/transformers/transformer.png)
 
 ---
 
