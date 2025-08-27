@@ -2,7 +2,7 @@
 
 Keras provides many layer types you can add to neural networks. Each serves a specific purpose in learning, regularization, or optimization.
 
-## 🔹 Core Layers
+## Core Layers
 
 - Dense
     - Fully connected layer.
@@ -22,7 +22,7 @@ Keras provides many layer types you can add to neural networks. Each serves a sp
     - Converts integers (like word indices) into dense vectors.
     - Essential for NLP models.
 
-## 🔹 Regularization Layers
+## Regularization Layers
 
 - Dropout
     - Randomly drops a fraction of neurons during training.
@@ -37,7 +37,7 @@ Keras provides many layer types you can add to neural networks. Each serves a sp
     - Drops entire feature maps instead of individual neurons.
     - Useful in CNNs to maintain spatial correlation.
 
-## 🔹 Advanced / Special Layers
+## Advanced / Special Layers
 
 - LSTM / GRU
     - Recurrent layers that capture sequence dependencies.
@@ -55,7 +55,7 @@ Keras provides many layer types you can add to neural networks. Each serves a sp
     - Defines the model’s input shape.
     - First layer in a Sequential or Functional API model.
 
-## 🔹 Customization Layers
+## Customization Layers
 
 - Lambda
     - Wraps custom functions as a layer.

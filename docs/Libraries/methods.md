@@ -10,7 +10,7 @@ In supervised learning, the algorithm is trained on labeled data (inputs with kn
 - Polynomial Regression: Extends linear regression with polynomial terms to model non-linear relationships.
 - Non-linear Regression: Uses more complex functions (e.g., exponential, logarithmic, or kernel-based) to capture relationships beyond polynomial.
 - Regression Trees: Decision trees designed for predicting continuous outcomes instead of categories.
-# TODO add SVR
+- Support Vector Regression (SVR): Extension of SVM for regression tasks. It tries to fit the best line within a margin of tolerance (epsilon), ignoring errors within that margin and penalizing only larger deviations.
 
 ### Classification (Predicting Categories)
 Note: all of the following can be used for Regression
@@ -20,7 +20,7 @@ Note: all of the following can be used for Regression
 - Support Vector Machines (SVM): Finds the best hyperplane to separate classes with maximum margin.
 - K-Nearest Neighbors (KNN): Classifies based on the majority label among the k closest training samples.
 - Naive Bayes: A probabilistic model based on Bayes’ theorem, assuming independence between features.
-# TODO add SVM
+- Support Vector Machines (SVM): SVM finds the optimal separating hyperplane that maximizes the margin between classes. Works well in high-dimensional spaces and can use kernels for non-linear separation.
 
 ### Ensemble Methods (combines multiple models to produce a stronger and more accurate overall model)
 Note: can be used for Classification and Regression
