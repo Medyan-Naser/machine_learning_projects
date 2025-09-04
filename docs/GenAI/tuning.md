@@ -91,6 +91,25 @@ These methods re-express weight matrices using low-rank approximations.
 - Decomposes weight updates into low-rank matrices.  
 - Adds small trainable components while freezing the original weights.  
 - Captures the most important directions in parameter space.  
+- Learnable paramterers (k x r + r x p) < (k x p)
+- Optimized key, query, and value parameters and is applicable to encoders and ecoders
+
+### QLoRA (Quantized Low-Rank Adaptation)
+QLoRA extends **LoRA** by combining it with **quantization**, enabling efficient fine-tuning of large language models with significantly reduced memory usage. 
+- GPU only 
+- It uses **4-bit quantization (NF4)**, **double quantization**, and **paged optimizers** to drastically cut memory use while keeping accuracy close to full precision. 
+- **Definition**: It applies low-rank adaptation on top of a quantized base model.  
+- **Goal**: Optimize performance while reducing GPU memory requirements by up to **75%**.  
+- **Key Techniques**:
+  - **Quantization**: Reduces numerical precision to a finite set of discrete levels, lowering memory usage and enabling efficient computation.  
+    - Example: 3-bit quantization maps values into 8 levels (e.g., -1, -0.75, …, 1).
+  - **Double Quantization**: Further compresses storage by quantizing the quantization constants themselves.  
+  - **Paged Optimizers**: A memory management trick that dynamically loads/unloads parameters to fit large models into limited GPU memory.  
+
+**Advantages**:
+- Enables fine-tuning of billion-parameter models on smaller GPUs.  
+- Retains strong accuracy while drastically lowering resource requirements.  
+- Combines the adaptability of LoRA with the efficiency of quantization.  
 
 ### Variants
 - **QLoRA**: Combines LoRA with quantization → reduces memory footprint further.  
@@ -113,15 +132,3 @@ Represents the minimum number of vectors needed to span a space.
 | **LoRA / QLoRA / DoRA** | Low-rank updates      | ✅ Yes                         | ✅ Very High | State-of-the-art LLM tuning |
 
 ---
-
-## Recap
-
-- **Full Fine-Tuning**: powerful but expensive and risky.  
-- **PEFT**: efficient, scalable, and widely used in modern NLP.  
-- **Three main categories**:
-    - Selective fine-tuning.  
-    - Additive fine-tuning (adapters).  
-    - Reparameterization (LoRA, QLoRA, DoRA).  
-- **Soft prompting** is a complementary approach that avoids weight updates.  
-
-PEFT has become the **default strategy** for adapting large pretrained models to new domains with minimal cost and maximal efficiency.  
