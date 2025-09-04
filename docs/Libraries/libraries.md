@@ -61,6 +61,7 @@ Below are the four main Python libraries for Machine Learning and Deep Learning,
 **What is it?**
 - A platform providing an open-source ecosystem for NLP and generative AI.  
 - Known for the **Transformers** library and a vast **Model Hub** of pretrained models.
+- Has a lot of pre-trained models
 
 **Key Features:**
 - **Extensive Model Hub**: Thousands of pretrained models for text generation, summarization, translation, and classification.  
