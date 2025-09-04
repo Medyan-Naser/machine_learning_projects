@@ -72,11 +72,24 @@ Instead of modifying existing weights, new task-specific modules are added.
 ## 3. Soft Prompting
 Prompts are treated as **trainable parameters** that guide the model’s behavior without altering weights.  
 
-- **Definition**: Learnable embeddings prepended or concatenated to input tokens.  
+# Hard prompting
+Hard prompts involve manually crafted text instructions that guide the model. They are composed of discrete input tokens, which can be effective but require significant effort to design well.
+
+- Example:
+To get a model to summarize text, you might use a hard prompt like:
+“Summarize the following text: [Text]”
+
+# Soft prompting
+Soft prompts, in contrast, use learnable tensors concatenated with input embeddings. These "virtual tokens" are optimized to the data set, providing more efficient and flexible task adaptation.
+
+- Example:
+Instead of explicit text ("Summarize the following text:", in this case), a soft prompt involves adjusting input embeddings that subtly guide the model toward generating summaries.
+
+- **Definition**: Learnable embeddings prepended or concatenated to input tokens. So the new learnable embedding is added to the pre-trained ones
 - **Variants**:
     - **Prompt Tuning** – optimize a small number of tokens.  
-    - **Prefix Tuning** – optimize prefix embeddings across layers.  
-    - **P-Tuning** – integrates prompts into deeper layers.  
+    - **Prefix Tuning** – optimize prefix embeddings across layers. The key distinction is that prefix tuning integrates these parameters across all model layers, unlike prompt tuning, which only modifies the input embeddings.
+    - **P-Tuning** – integrates prompts into deeper layers. This optimization is done with a prompt encoder, typically a bidirectional LSTM.
     - **Multitask Prompt Tuning** – share prompts across tasks.  
 
 **Benefit**:  
@@ -97,7 +110,7 @@ These methods re-express weight matrices using low-rank approximations.
 ### QLoRA (Quantized Low-Rank Adaptation)
 QLoRA extends **LoRA** by combining it with **quantization**, enabling efficient fine-tuning of large language models with significantly reduced memory usage. 
 - GPU only 
-- It uses **4-bit quantization (NF4)**, **double quantization**, and **paged optimizers** to drastically cut memory use while keeping accuracy close to full precision. 
+- Quantization reduces the precision of the numerical values to a finite set of discrete levels, decreasing memory usage and enabling efficient computation on hardware with limited precision. 
 - **Definition**: It applies low-rank adaptation on top of a quantized base model.  
 - **Goal**: Optimize performance while reducing GPU memory requirements by up to **75%**.  
 - **Key Techniques**:
