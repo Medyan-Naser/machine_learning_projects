@@ -19,6 +19,7 @@ nav:
     - Seq2Seq_RNNs: GenAI/seq2seq_rnn.md
     - Transformers: GenAI/transformers.md
     - Metrics: GenAI/metrics.md
+    - Tuning: GenAI/tuning.md
   - LLM:
     - Overview: LLM/LLM.md
     - BERT: LLM/BERT.md
