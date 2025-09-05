@@ -232,3 +232,27 @@ PPO is a reinforcement learning method commonly used in RLHF.
 PPO balances stability and adaptability, making it a practical choice for fine-tuning LLMs.  
 
 ---
+
+## Log-Derivative Trick
+
+The **log-derivative trick** (also called the *score function estimator*) is a key technique in machine learning and reinforcement learning.  
+It allows us to compute gradients of expectations involving probability distributions, which is essential when optimizing models that generate random outcomes.
+
+### Core Idea
+- Instead of directly differentiating through a random sample, we re-express the gradient in terms of the **logarithm of the probability distribution**.  
+- This makes it possible to estimate gradients even when the function being optimized is **non-differentiable** with respect to its parameters.  
+
+### Applications
+- **Reinforcement Learning (RL):**  
+  Used in policy gradient methods where actions are sampled from a probability distribution.  
+- **Score Function Estimator:**  
+  Provides an unbiased way to estimate gradients by weighting outcomes with their log-probabilities.  
+- **Likelihood-based Optimization:**  
+  Simplifies gradient computation for likelihood functions, especially in stochastic models.  
+
+### Relation to PPO
+The log-derivative trick underlies many **policy optimization algorithms**, including **Proximal Policy Optimization (PPO)**.  
+It enables training by relating policy gradients to log-probabilities of actions, making it possible to improve policies efficiently and stably.  
+
+---
+
