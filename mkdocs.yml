@@ -24,6 +24,7 @@ nav:
     - Overview: LLM/LLM.md
     - BERT: LLM/BERT.md
     - NER: LLM/NER.md
+    - Tuning: LLM/tuning.md
   - Extra:
     - 3B1B: 3Blue1Brown.md
 
