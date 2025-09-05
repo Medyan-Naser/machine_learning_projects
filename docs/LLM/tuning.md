@@ -48,6 +48,8 @@ Different models may use different tokens (e.g., *Human/Assistant*). Consistency
 By default, language models learn from every token they predict.  
 Instruction tuning often uses **masking** so the loss is applied only to the **response tokens**, not to the instruction itself.  
 
+- Instruction masking enhances transformer-based model fine-tuning by ensuring loss computation focuses only on response tokens, improving accuracy and contextual relevance. This technique prevents models from overfitting to instruction patterns, optimizes computational efficiency, and enhances user interactions in AI-driven applications such as chatbots and Q&A systems. 
+
 **Why it matters**:  
 - Focuses learning on the target output.  
 - Reduces wasted computation on repeating instructions.  
