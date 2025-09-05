@@ -153,3 +153,82 @@ Reward models are crucial because they:
 - Improve **alignment** between LLMs and user intent.  
 - Enable efficient use of tuning methods like **LoRA, RLHF, and DPO**.  
 - Provide a scalable way to optimize for **factuality, safety, and usefulness**.  
+
+---
+
+### Bradley–Terry Model
+The **Bradley–Terry model** is a probabilistic framework used to model pairwise comparisons.  
+In the context of reward modeling, it provides a way to assign probabilities that one response is preferred over another.  
+
+- **Use case:** Often applied in pairwise preference training for reward models.  
+- **Advantage:** Provides a clear mathematical basis for ranking responses.  
+- **Relation:** Forms the foundation for many pairwise reward modeling loss functions.  
+
+---
+
+# Language Models as Distributions and Policies
+
+## LLMs as Distributions
+Large Language Models (LLMs) generate text by sampling from a probability distribution over tokens.  
+Given a query *X*, the model produces a response *Y* as a sequence of tokens, where each token is drawn from the distribution conditioned on previous tokens.  
+
+- **Token probabilities:** Computed using the softmax function at each timestep.  
+- **Sequential dependency:** The distribution at time *t+1* depends on tokens selected at time *t*.  
+- **Sampling outcomes:** Multiple valid responses can be generated from the same query, reflecting the stochastic nature of LLMs.  
+
+---
+
+## Generation Parameters
+LLMs allow fine control of the sampling process through hyperparameters:  
+
+- **Temperature (τ):** Controls randomness.  
+    - Low τ → deterministic outputs.  
+    - High τ → more diverse outputs.  
+- **Top-K sampling:** Limits candidate tokens to the *K* highest probabilities.  
+- **Top-p sampling (nucleus):** Selects the smallest set of tokens whose cumulative probability exceeds *p*.  
+- **Beam search:** Expands and tracks multiple candidate sequences in parallel.  
+- **Repetition penalty:** Reduces repeated tokens for more diverse text.  
+- **Max/Min tokens:** Constrains output length.  
+
+These parameters balance between accuracy, diversity, and creativity in generation.  
+
+---
+
+## From Distributions to Policies
+In reinforcement learning (RL), a **policy** maps states to actions.  
+For LLMs, the policy defines how tokens are sampled during generation.  
+
+- **Policy distribution:** Given input *X*, responses *Y* are sampled from the model’s policy.  
+- **Rollouts:** Multiple responses generated for the same query; used to explore the policy space.  
+- **Exploration vs. exploitation:** Policies introduce randomness to explore diverse text while still favoring likely responses.  
+
+---
+
+## Reinforcement Learning with Human Feedback (RLHF)
+RLHF aligns LLMs with human preferences using a reward signal.  
+
+1. **Reward function:** Evaluates query–response pairs with human feedback.  
+    - Good answers → high reward.  
+    - Poor answers → low reward.  
+2. **Rollouts:** Multiple responses per query are sampled and scored.  
+3. **Expected reward:** Averaged across responses to guide training.  
+4. **Fine-tuning:** Model parameters are updated to maximize expected reward while staying close to the pretrained model.  
+
+This process ensures responses are accurate, safe, and aligned with user intent.  
+
+---
+
+## Proximal Policy Optimization (PPO)
+PPO is a reinforcement learning method commonly used in RLHF.  
+
+- **Objective:** Maximize expected reward while preventing drastic changes in the model.  
+- **KL penalty:** Keeps the updated policy close to the reference model for stability.  
+- **Gradient optimization:** Uses sampling tricks (e.g., log-derivative method) to estimate gradients efficiently.  
+- **Training tips:**  
+    - Regularly evaluate with human feedback.  
+    - Start with moderate KL penalty and tune gradually.  
+    - Adjust temperature to encourage exploration.  
+
+PPO balances stability and adaptability, making it a practical choice for fine-tuning LLMs.  
+
+---
