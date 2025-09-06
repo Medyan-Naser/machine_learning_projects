@@ -181,7 +181,7 @@ Given a query *X*, the model produces a response *Y* as a sequence of tokens, wh
 ## Generation Parameters
 LLMs allow fine control of the sampling process through hyperparameters:  
 
-- **Temperature (τ):** Controls randomness.  
+- **Temperature (τ):** Controls randomness in SoftMax function.  
     - Low τ → deterministic outputs.  
     - High τ → more diverse outputs.  
 - **Top-K sampling:** Limits candidate tokens to the *K* highest probabilities.  
@@ -223,6 +223,7 @@ PPO is a reinforcement learning method commonly used in RLHF.
 
 - **Objective:** Maximize expected reward while preventing drastic changes in the model.  
 - **KL penalty:** Keeps the updated policy close to the reference model for stability.  
+    - The Kullback-Leibler, or KL, divergence measures the difference between two probability distributions, the desired and the arbitrary policy.
 - **Gradient optimization:** Uses sampling tricks (e.g., log-derivative method) to estimate gradients efficiently.  
 - **Training tips:**  
     - Regularly evaluate with human feedback.  
@@ -256,3 +257,72 @@ It enables training by relating policy gradients to log-probabilities of actions
 
 ---
 
+## Direct Preference Optimization (DPO)
+
+### Concept
+Direct Preference Optimization (DPO) is a reinforcement learning technique that fine-tunes models based directly on human preferences.  
+Unlike RLHF with PPO, which requires building and training a reward model, DPO bypasses the need for reinforcement learning loops and directly aligns models with preference data.  
+
+- **Preference collection:** Users compare two or more outputs and select the preferred one.  
+- **Efficiency:** Simpler than PPO as it avoids indirect reward maximization.  
+- **Reward-free alignment:** Achieves strong results on academic benchmarks without building a reward model.  
+
+---
+
+### Models in DPO
+DPO involves three components:  
+- **Reward function:** Evaluates relevance or quality of responses.  
+- **Target decoder:** Learns to generate aligned responses.  
+- **Reference model:** Provides a baseline for comparison and regularization.  
+
+The **objective** is to learn a policy that balances alignment with the reward function while staying close to the reference model, controlled by a regularization parameter (β).  
+
+---
+
+### Partition Function in DPO
+The **partition function** is used to normalize probabilities in probability distributions.  
+
+- Ensures the sum of probabilities equals 1.  
+- Converts unnormalized functions (e.g., exponential or Gaussian scaling) into valid probability distributions.  
+- In DPO, helps reformulate the complex RL objective into a simpler one that avoids explicitly computing the partition function.  
+
+---
+
+### Optimal Solution and KL Divergence
+- **Objective functions:** Guide optimization by comparing predictions to targets.  
+- **KL divergence:** Measures the difference between the desired policy (π*) and the reference policy (π_ref).  
+    - Zero KL divergence means the two distributions are identical.  
+- **Transformations:** Maximization can be reformulated as minimization, and scaling or shifting functions does not change the optimum.  
+- **Result:** The optimal policy scales the reference model with the reward function, modulated by β.  
+
+---
+
+### Partition Function Complexity
+- For sequence length **1:** z(x) sums over all tokens in the vocabulary (|V|).  
+- For length **2:** sums over |V|² possible pairs.  
+- For length **T:** grows exponentially as |V|ᵀ, making exact computation intractable.  
+- DPO avoids this complexity by reformulating the objective to eliminate explicit dependence on z(x).  
+
+---
+
+### Bradley-Terry Model and DPO Loss
+- **Pairwise ranking:** Easier for humans than giving absolute scores. Responses are ranked as **Win (W)** or **Loss (L)**.  
+- **Bradley-Terry model:** Defines loss as the log of the sigmoid of score differences between W and L.  
+- **Integration with DPO:** Reformulates the loss to directly compare policies of W and L, eliminating the need for the partition function.  
+
+**Key insight:**  
+The DPO objective becomes a function of the model’s policy and the reference model, removing the need for a separate reward function.  
+
+---
+
+### Training and Implementation
+- **Simplification:** Set β = 1 and treat the reference model as a constant baseline.  
+- **Loss behavior:**  
+  - If policy(W) < policy(L), loss decreases as policy(W) increases.  
+  - If policy(W) > policy(L), loss continues to decrease, reinforcing preferred completions.  
+- **Cost formulation:** Convert loss into a cost function via negative log-likelihood.  
+- **Implementation:**  
+  - Custom loss function in PyTorch.  
+  - Hugging Face DPO Trainer for practical training.  
+
+---
