@@ -270,7 +270,7 @@ Unlike RLHF with PPO, which requires building and training a reward model, DPO b
 ---
 
 ### Models in DPO
-DPO involves three components:  
+DPO involves three components (are they all encoders?):  
 - **Reward function:** Evaluates relevance or quality of responses.  
 - **Target decoder:** Learns to generate aligned responses.  
 - **Reference model:** Provides a baseline for comparison and regularization.  
@@ -280,20 +280,11 @@ The **objective** is to learn a policy that balances alignment with the reward f
 ---
 
 ### Partition Function in DPO
-The **partition function** is used to normalize probabilities in probability distributions.  
+The **partition function** is used to normalize probabilities in probability distributions. It can conver a simple distribution to a more complex one.
 
 - Ensures the sum of probabilities equals 1.  
 - Converts unnormalized functions (e.g., exponential or Gaussian scaling) into valid probability distributions.  
 - In DPO, helps reformulate the complex RL objective into a simpler one that avoids explicitly computing the partition function.  
-
----
-
-### Optimal Solution and KL Divergence
-- **Objective functions:** Guide optimization by comparing predictions to targets.  
-- **KL divergence:** Measures the difference between the desired policy (π*) and the reference policy (π_ref).  
-    - Zero KL divergence means the two distributions are identical.  
-- **Transformations:** Maximization can be reformulated as minimization, and scaling or shifting functions does not change the optimum.  
-- **Result:** The optimal policy scales the reference model with the reward function, modulated by β.  
 
 ---
 
@@ -305,6 +296,18 @@ The **partition function** is used to normalize probabilities in probability dis
 
 ---
 
+### Optimal Solution and KL Divergence
+- **Objective functions:** Guide optimization by comparing predictions to targets.  
+- **KL divergence:** Measures the difference between the desired policy (π*) and the reference policy (π_ref).  
+    - Zero KL divergence means the two distributions are identical.
+    - are you trying to solve for reaching a zero KL divergence?
+- **Optimal Solution** scales the reference model to the rewaqrd function; beta parameter controls the constant
+- **Transformations:** Maximization can be reformulated as minimization, and scaling or shifting functions does not change the optimum.  
+- **Result:** The optimal policy scales the reference model with the reward function, modulated by β.
+    - If the model assign a high probability to one of the output options, after applying the policy another option might have a higher probability
+
+---
+
 ### Bradley-Terry Model and DPO Loss
 - **Pairwise ranking:** Easier for humans than giving absolute scores. Responses are ranked as **Win (W)** or **Loss (L)**.  
 - **Bradley-Terry model:** Defines loss as the log of the sigmoid of score differences between W and L.  
@@ -312,17 +315,5 @@ The **partition function** is used to normalize probabilities in probability dis
 
 **Key insight:**  
 The DPO objective becomes a function of the model’s policy and the reference model, removing the need for a separate reward function.  
-
----
-
-### Training and Implementation
-- **Simplification:** Set β = 1 and treat the reference model as a constant baseline.  
-- **Loss behavior:**  
-  - If policy(W) < policy(L), loss decreases as policy(W) increases.  
-  - If policy(W) > policy(L), loss continues to decrease, reinforcing preferred completions.  
-- **Cost formulation:** Convert loss into a cost function via negative log-likelihood.  
-- **Implementation:**  
-  - Custom loss function in PyTorch.  
-  - Hugging Face DPO Trainer for practical training.  
 
 ---
