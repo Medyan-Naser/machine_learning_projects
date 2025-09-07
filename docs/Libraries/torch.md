@@ -259,3 +259,41 @@ This feature is helpful in advanced NLP applications where the neural network ar
 ## Dynamic computation graphs (Autograd)
 
 PyTorch's Autograd system allows dynamic changes to the network during training, enhancing flexibility and easing the development process. This adaptability is particularly beneficial for research and experimentation.
+
+PyTorch uses a **dynamic computational graph**, also called a **define-by-run** graph. A computational graph is a representation where:
+
+- **Nodes** represent operations (e.g., addition, multiplication, matrix multiplication).  
+- **Edges** represent the flow of data (tensors) between operations.
+
+In PyTorch, this graph is **created dynamically during each forward pass**. Every operation performed on a tensor automatically adds nodes to the graph, and the graph keeps a **history of operations** required for computing derivatives.
+
+### Static vs Dynamic Graph
+
+- **Static Graph (e.g., TensorFlow 1.x, Theano)**:  
+  - The graph is defined **before** running any data.  
+  - Changing the computation requires rebuilding the graph.  
+  - Optimized for repeated execution, but less flexible.  
+
+- **Dynamic Graph (PyTorch)**:  
+  - Built **on-the-fly** during execution.  
+  - Supports Python control flow (`if`, `for`, `while`) naturally.  
+  - Easier to debug and allows variable-length inputs and dynamically changing architectures.
+
+### Differentiation and Backpropagation
+
+PyTorch’s dynamic graph works closely with **autograd**:
+
+- Each operation in the graph records its inputs and operation type.  
+- When `.backward()` is called on a tensor, PyTorch traverses the graph in reverse to compute **derivatives (gradients)**.  
+- Gradients are calculated **only when needed**, and each forward pass creates a fresh graph.  
+
+This allows flexible gradient computation for complex and varying models without predefining the entire graph.
+
+### Why It’s Special
+
+- **Flexible and Pythonic**: Write models with standard Python code.  
+- **Supports dynamic architectures**: Useful for variable-length sequences, recursive networks, and research experimentation.  
+- **Automatic differentiation**: Keeps the history of computations to compute derivatives efficiently and on demand.  
+- **Easy debugging**: Inspect tensors and operations at any point using Python tools.
+
+Overall, PyTorch’s dynamic computational graph combines **flexibility, transparency, and automatic differentiation**, making it ideal for both research and production use.

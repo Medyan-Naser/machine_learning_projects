@@ -189,6 +189,7 @@ Computing the gradient for all examples is too slow.
 
 **Definition**
 
+- Starting from the end!
 - Represent problems using an **energy or cost function** \(E(x)\).
 - Goal: find the configuration \(x^*\) that **minimizes energy**:  
 $$
