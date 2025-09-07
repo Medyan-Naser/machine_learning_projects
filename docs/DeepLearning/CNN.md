@@ -16,6 +16,19 @@ CNNs are deep learning models specialized for image data. They automatically lea
         - `same` → keeps output size same as input.
         - `valid` → no padding, output shrinks.
 
+### Gaussian Kernel in CNNs
+
+- A Gaussian kernel is a filter with values following a Gaussian (bell curve) distribution.
+- When applied in convolution, it smooths or blurs the image, reducing noise while preserving general patterns.
+- **Effect of kernel sum**:
+  - Sum = 1 → preserves brightness.
+  - Sum < 1 → darkens image.
+  - Sum > 1 → brightens or amplifies features.
+  - Sum = 0 → highlights edges or regions of change.
+- In CNNs, the network **learns the kernel values** during training to detect patterns that are most relevant for the task (edges, textures, or specific shapes).
+- The **magnitude of the convolution result** can indicate areas of interest, e.g., strong edges, bright features, or regions with high contrast.
+
+
 ### Activation Functions
 
 - Typically ReLU after each Conv layer.

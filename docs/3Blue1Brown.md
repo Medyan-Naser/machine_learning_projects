@@ -160,3 +160,68 @@ Computing the gradient for all examples is too slow.
 - Formally: compute partial derivatives using the chain rule.
 - SGD makes training feasible by approximating the gradient with mini-batches.
 - Together, these steps enable neural networks to learn from large datasets.
+
+## 4. Dynamic Programming and Minimal Energy Methods in AI
+
+### Dynamic Programming (DP)
+
+**Definition**
+
+- DP solves complex problems by breaking them into simpler, overlapping subproblems.
+- Relies on **optimal substructure**: the best solution can be built from best solutions of subproblems.
+- Stores intermediate results to avoid redundant computation.
+
+**Applications in AI**
+
+- **Reinforcement Learning (RL):**  
+    - Value Iteration and Policy Iteration use DP to find optimal policies in Markov Decision Processes (MDPs).  
+- **Planning and Search:**  
+    - DP algorithms compute shortest paths, optimal sequences of actions, and resource allocation.
+
+**Key Idea**
+
+- Build solutions incrementally from subproblem results.
+- Efficiently handles problems where brute-force search would be too expensive.
+
+---
+
+### Minimal Energy Methods
+
+**Definition**
+
+- Represent problems using an **energy or cost function** \(E(x)\).
+- Goal: find the configuration \(x^*\) that **minimizes energy**:  
+$$
+  \[
+  x^* = \arg\min_x E(x)
+  \]
+$$
+- In AI, “energy” often corresponds to loss, cost, or negative probability.
+
+**Applications in AI**
+
+- **Computer Vision:** Image segmentation, stereo matching (graph cuts). 
+        - This allow for finding a line of pixels with the lowest energy to remove when scalling down an image, but you keep the important parts of the image.
+- **Neural Networks:** Training minimizes a loss function (a type of energy).  
+- **Probabilistic Models:** Markov Random Fields (MRFs) find the most probable configuration by minimizing energy.
+
+**Key Idea**
+
+- Optimal solutions correspond to minimal energy states.
+- Often solved with specialized optimization algorithms, sometimes combined with DP.
+
+---
+
+### Connection Between DP and Minimal Energy
+
+- Both aim to **find optimal solutions** efficiently.  
+- Example: **Sequence labeling (OCR, POS tagging)**  
+    - Modeled as a chain-structured MRF.  
+    - Minimal energy corresponds to the best label sequence.  
+    - Solved efficiently with **dynamic programming algorithms**, like the Viterbi algorithm.  
+
+**Summary**
+
+- DP is a method for structured optimization.  
+- Minimal energy methods are a problem formulation emphasizing optimal configurations.  
+- DP can solve minimal energy problems in AI efficiently when structure allows.

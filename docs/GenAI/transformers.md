@@ -139,6 +139,8 @@ Here $d_k$ is the dimension of the key/query space, added for numerical stabilit
 ### Self-Attention vs Cross-Attention
 - **Self-Attention:** Each token attends to other tokens in the same sequence. Captures intra-sequence relationships.
 - **Cross-Attention:** Tokens in one sequence (e.g., decoder input) attend to tokens in another sequence (e.g., encoder output). Integrates information across sequences.
+    - computes attention score between target and source positions
+    - Cross-attention help to attend to the encoder hidden representation
 
 ### How Single-Head and Multi-Head Fit
 - **Single-Head Attention:** Computes one attention pattern at a time; basic building block.
