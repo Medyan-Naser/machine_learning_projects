@@ -25,6 +25,11 @@ nav:
     - BERT: LLM/BERT.md
     - NER: LLM/NER.md
     - Tuning: LLM/tuning.md
+  - AI Agents:
+    - Overview: Agents/overview.md
+    - RAG: Agents/RAG.md
+    - LangChain: Agents/langchain.md
+    - Applications: Agents/applications.md
   - Extra:
     - 3B1B: 3Blue1Brown.md
 
