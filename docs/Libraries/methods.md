@@ -90,3 +90,17 @@ Used to reduce the number of input features while retaining most information.
 ### Reinforcement Learning (RL)
 - Q-Learning, Deep Q-Networks (DQN): Learn optimal action policies by estimating the value (Q-value) of taking an action in a given state, using reward feedback from the environment.
 - Policy Gradient Methods: Directly optimize decision-making policies.
+
+### Zero-Shot Learning (ZSL)
+Zero-Shot Learning refers to the ability of a model to **make predictions for tasks or classes it has never seen during training**. Instead of relying on labeled examples for every possible category, the model uses **auxiliary information** such as textual descriptions, embeddings, or semantic attributes to generalize.
+
+**Key Points:**
+- **No Training Examples for Target Task:** The model predicts outputs for classes or tasks it has never been explicitly trained on.
+- **Auxiliary Information:** Uses semantic descriptions or embeddings (e.g., Word2Vec, text prompts) to relate new classes to known ones.
+- **Applications:**
+  - **NLP / LLMs:** Answer questions, translate, or summarize text without task-specific training.
+  - **Computer Vision:** Classify images into categories not seen during training (e.g., CLIP).
+- **Difference from Few-Shot Learning:** Zero-shot uses **no examples**, while few-shot uses a small number of labeled examples.
+- **How it Works:** The model maps inputs and outputs into a **shared representation space**, compares inputs with unseen class representations, and predicts the most likely match.
+
+Zero-shot learning allows AI models to **generalize beyond their training data**, making them highly flexible for new tasks.

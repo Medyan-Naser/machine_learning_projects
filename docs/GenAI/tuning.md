@@ -1,4 +1,4 @@
-# Tuning and Parameter-Efficient Fine-Tuning (PEFT)
+# SFT (Supervised Fine-Tuning)
 
 ## Overview
 Fine-tuning is the process of adapting a pretrained model (such as a large language model) to a new, task-specific domain.  
