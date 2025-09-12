@@ -113,3 +113,40 @@ RAG combines **retrieval of external data** with LLM reasoning to deliver ground
 
 ---
 
+## Chains, Memory, and Agents
+
+LangChain uses **chains, memory, and agents** to build dynamic applications that combine reasoning, context, and tool usage.  
+
+### Chains
+- A **chain** is a sequence of calls where the **output of one step becomes the input for the next**.  
+- **Sequential Chains** create smooth flows:
+   1. Chain 1 → Selects a famous dish for a given location.  
+   2. Chain 2 → Generates the recipe for that dish.  
+   3. Chain 3 → Estimates cooking time from the recipe.  
+- Each chain is defined by:
+   - **Prompt Template** (task instruction).  
+   - **LLM Chain** (model + template).  
+   - **Output Key** (where result is stored).  
+- Sequential chains combine steps into a **unified process** with verbose tracing for debugging.
+
+### Memory
+- **Memory** allows chains to **store and recall context** across interactions.  
+- Each chain:
+   - Reads from memory → enhances input with past history.  
+   - Writes to memory → saves current input/output for future use.  
+- **ChatMessageHistory** stores:
+   - *Human messages* (user inputs).  
+   - *AI messages* (model responses).  
+- Enables continuity in dialogue (e.g., remembering prior questions/answers).
+
+### Agents
+- **Agents** are dynamic systems where an LLM decides which actions to take.  
+- Agents use **reasoning + tools** to fulfill user requests.  
+- Unlike chains, agents can **choose actions dynamically** at runtime.  
+- Tools integrated with agents:  
+   - Search engines, databases, APIs, websites.  
+- Example: **Pandas DataFrame Agent**  
+   - Created with `create_pandas_dataframe_agent`.  
+   - Transforms natural language queries into Python code.  
+   - Executes on a DataFrame (e.g., "How many rows?" → returns 139).  
+   - `verbose=True` shows model reasoning process.  
