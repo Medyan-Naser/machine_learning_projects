@@ -150,3 +150,19 @@ LangChain uses **chains, memory, and agents** to build dynamic applications that
    - Transforms natural language queries into Python code.  
    - Executes on a DataFrame (e.g., "How many rows?" → returns 139).  
    - `verbose=True` shows model reasoning process.  
+
+---
+
+## Generative models
+Generative models understand and capture the underlying patterns and data distribution to resemble the given data sets. Generative models are applicable in generating images, text, and music, augmenting data, discovering drugs, and detecting anomalies. 
+
+Types of generative models are: 
+
+- Gaussian mixture models (GMMs)
+- Hidden Markov models (HMMs)
+- Restricted Boltzmann machines (RBMs)
+- Variational autoencoders (VAEs)
+- Generative adversarial networks (GANs)
+- Diffusion models
+
+---
