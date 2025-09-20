@@ -25,16 +25,16 @@ LangChain = **reason + retrieve + act**.
 1. **Language Models (LMs)** – Foundation LLMs (IBM WatsonX, OpenAI, Google, Meta). Generate text from prompts.  
 2. **Chat Models** – Optimized for conversations; handle dialogue and context flow.  
 3. **Chat Messages** – Roles in chat:
-   - *Human Message* → user input  
-   - *AI Message* → model response  
-   - *System Message* → instructions  
-   - *Function Message* → call outcomes  
-   - *Tool Message* → tool interaction  
+      - *Human Message* → user input  
+      - *AI Message* → model response  
+      - *System Message* → instructions  
+      - *Function Message* → call outcomes  
+      - *Tool Message* → tool interaction  
    Each message = **role + content**.  
 4. **Prompt Templates** – Structure prompts with placeholders for dynamic inputs.  
-   - String Prompt Template (single format)  
-   - Chat Prompt Template (multi-role messages)  
-   - Example Selector – chooses best examples (Semantic Similarity, MMR, N-Gram).  
+      - String Prompt Template (single format)  
+      - Chat Prompt Template (multi-role messages)  
+      - Example Selector – chooses best examples (Semantic Similarity, MMR, N-Gram).  
 5. **Output Parsers** – Convert model output into structured formats (JSON, CSV, XML, Pandas).  
 6. **Chains** – Sequences of LLM calls, retrievers, and tools.  
 7. **Agents** – LLM-powered decision makers choosing actions.  
@@ -60,9 +60,9 @@ LangChain supports **prompt engineering** to guide LLM behavior.
 ## Example Workflow
 1. User asks: *"Summarize the company’s mobile policy."*  
 2. Pipeline:  
-   - Encode query → Search FAISS index → Retrieve top chunks  
-   - Add retrieved context to prompt → Send to LLM  
-   - Generate structured summary  
+      - Encode query → Search FAISS index → Retrieve top chunks  
+      - Add retrieved context to prompt → Send to LLM  
+      - Generate structured summary  
 
 ---
 
@@ -81,35 +81,35 @@ RAG combines **retrieval of external data** with LLM reasoning to deliver ground
 
 ### Document Workflow in LangChain
 1. **Document Object**  
-   - Core container for data.  
-   - Attributes:  
-     - `page_content` → document text (string).  
-     - `metadata` → extra info (e.g., `document_id`, filename, tags).  
+      - Core container for data.  
+      - Attributes:  
+         - `page_content` → document text (string).  
+         - `metadata` → extra info (e.g., `document_id`, filename, tags).  
 
 2. **Document Loaders**  
-   - Load data from 100+ sources (Airbyte, Unstructured, S3, websites, PDFs, code).  
-   - Example: Web loader fetches content directly from a URL.  
+      - Load data from 100+ sources (Airbyte, Unstructured, S3, websites, PDFs, code).  
+      - Example: Web loader fetches content directly from a URL.  
 
 3. **Text Splitters**  
-   - Break large documents into smaller chunks for retrieval.  
-   - Examples:  
-     - `CharacterTextSplitter` → recursive character-based splitting.  
-     - `MarkdownHeaderTextSplitter` → split by markdown headers.  
+      - Break large documents into smaller chunks for retrieval.  
+      - Examples:  
+         - `CharacterTextSplitter` → recursive character-based splitting.  
+         - `MarkdownHeaderTextSplitter` → split by markdown headers.  
 
 4. **Embeddings**  
-   - Convert document chunks into vector representations capturing semantic meaning.  
-   - Example: Embedding model from WatsonX.ai.  
+      - Convert document chunks into vector representations capturing semantic meaning.  
+      - Example: Embedding model from WatsonX.ai.  
 
 5. **Vector Databases**  
-   - Store embeddings for fast similarity search.  
-   - Example: **Chroma** for storing embeddings and retrieving nearest neighbors.  
+      - Store embeddings for fast similarity search.  
+      - Example: **Chroma** for storing embeddings and retrieving nearest neighbors.  
 
 6. **Retrievers**  
-   - Extract relevant chunks from vector stores.  
-   - Types:  
-     - **Vector Store Retriever** – similarity search.  
-     - **Parent Document Retriever** – searches within parent chunks.  
-     - **Self-Query Retriever** – advanced filtering with metadata. 
+      - Extract relevant chunks from vector stores.  
+      - Types:  
+         - **Vector Store Retriever** – similarity search.  
+         - **Parent Document Retriever** – searches within parent chunks.  
+         - **Self-Query Retriever** – advanced filtering with metadata. 
 
 ---
 
@@ -120,23 +120,23 @@ LangChain uses **chains, memory, and agents** to build dynamic applications that
 ### Chains
 - A **chain** is a sequence of calls where the **output of one step becomes the input for the next**.  
 - **Sequential Chains** create smooth flows:
-   1. Chain 1 → Selects a famous dish for a given location.  
-   2. Chain 2 → Generates the recipe for that dish.  
-   3. Chain 3 → Estimates cooking time from the recipe.  
+      1. Chain 1 → Selects a famous dish for a given location.  
+      2. Chain 2 → Generates the recipe for that dish.  
+      3. Chain 3 → Estimates cooking time from the recipe.  
 - Each chain is defined by:
-   - **Prompt Template** (task instruction).  
-   - **LLM Chain** (model + template).  
-   - **Output Key** (where result is stored).  
+      - **Prompt Template** (task instruction).  
+      - **LLM Chain** (model + template).  
+      - **Output Key** (where result is stored).  
 - Sequential chains combine steps into a **unified process** with verbose tracing for debugging.
 
 ### Memory
 - **Memory** allows chains to **store and recall context** across interactions.  
 - Each chain:
-   - Reads from memory → enhances input with past history.  
-   - Writes to memory → saves current input/output for future use.  
+      - Reads from memory → enhances input with past history.  
+      - Writes to memory → saves current input/output for future use.  
 - **ChatMessageHistory** stores:
-   - *Human messages* (user inputs).  
-   - *AI messages* (model responses).  
+      - *Human messages* (user inputs).  
+      - *AI messages* (model responses).  
 - Enables continuity in dialogue (e.g., remembering prior questions/answers).
 
 ### Agents
@@ -144,12 +144,12 @@ LangChain uses **chains, memory, and agents** to build dynamic applications that
 - Agents use **reasoning + tools** to fulfill user requests.  
 - Unlike chains, agents can **choose actions dynamically** at runtime.  
 - Tools integrated with agents:  
-   - Search engines, databases, APIs, websites.  
+      - Search engines, databases, APIs, websites.  
 - Example: **Pandas DataFrame Agent**  
-   - Created with `create_pandas_dataframe_agent`.  
-   - Transforms natural language queries into Python code.  
-   - Executes on a DataFrame (e.g., "How many rows?" → returns 139).  
-   - `verbose=True` shows model reasoning process.  
+      - Created with `create_pandas_dataframe_agent`.  
+      - Transforms natural language queries into Python code.  
+      - Executes on a DataFrame (e.g., "How many rows?" → returns 139).  
+      - `verbose=True` shows model reasoning process.  
 
 ---
 
