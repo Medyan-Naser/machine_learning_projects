@@ -297,3 +297,42 @@ This allows flexible gradient computation for complex and varying models without
 - **Easy debugging**: Inspect tensors and operations at any point using Python tools.
 
 Overall, PyTorch’s dynamic computational graph combines **flexibility, transparency, and automatic differentiation**, making it ideal for both research and production use.
+
+
+## Training model in PyTorch
+Now that the model is defined, you define a train function the seq2seq model. Let's go through the code and understand its components:
+
+1. `train(model, iterator, optimizer, criterion, clip)` takes five arguments:
+    - `model` is the model that will be trained.
+    - `iterator` is an iterable object that provides the training data in batches.
+    - `optimizer` is the optimization algorithm used to update the model's parameters.
+    - `criterion` is the loss function that measures the model's performance.
+    - `clip` is a value used to clip the gradients to prevent them from becoming too large during backpropagation.
+
+2. The function starts by setting the model to training mode with `model.train()`. This is necessary to enable certain layers (e.g., dropout) that behave differently during training and evaluation.
+
+3. It initializes a variable `epoch_loss` to keep track of the accumulated loss during the epoch.
+
+4. The function iterates over the training data provided by the `iterator`. Each iteration retrieves a batch of input sequences (`src`) and target sequences (`trg`).
+
+5. The input sequences (`src`) and target sequences (`trg`) are moved to the appropriate device (e.g., GPU) using `src = src.to(device)` and `trg = trg.to(device)`.
+
+6. The gradients of the model's parameters are cleared using `optimizer.zero_grad()` to prepare for the new batch.
+
+7. The model is then called with `output = model(src, trg)` to obtain the model's predictions for the target sequences.
+
+8. The `output` tensor has dimensions `[trg len, batch size, output dim]`. To calculate the loss, the tensor is reshaped to `[trg len - 1, batch size, output dim]` to remove the initial `<bos>` token, which is not used for calculating the loss.
+
+9. The target sequences (`trg`) are also reshaped to `[trg len - 1]` by removing the initial `<bos>` token and making it a contiguous tensor. This matches the shape of the reshaped `output` tensor.
+
+10. The loss between the reshaped `output` and `trg` tensors is calculated using the specified `criterion`.
+
+11. The gradients of the loss with respect to the model's parameters are computed using `loss.backward()`.
+
+12. The gradients are then clipped to a maximum value specified by `clip` using `torch.nn.utils.clip_grad_norm_(model.parameters(), clip)`. This prevents the gradients from becoming too large, which can cause issues during optimization.
+
+13. The optimizer's `step()` method is called to update the model's parameters using the computed gradients.
+
+14. The current batch loss (`loss.item()`) is added to the `epoch_loss` variable.
+
+15. After all the batches have been processed, the function returns the average loss per batch for the entire epoch, calculated as `epoch_loss / len(list(iterator))`.
