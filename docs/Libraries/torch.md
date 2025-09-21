@@ -336,3 +336,35 @@ Now that the model is defined, you define a train function the seq2seq model. Le
 14. The current batch loss (`loss.item()`) is added to the `epoch_loss` variable.
 
 15. After all the batches have been processed, the function returns the average loss per batch for the entire epoch, calculated as `epoch_loss / len(list(iterator))`.
+
+
+## Evaluating model in PyTorch
+You also need to define a function to evaluate the model. Let's go through the code and understand its components:
+
+1. `evaluate(model, iterator, criterion)` takes three arguments:
+    - `model` is the neural network model that will be evaluated.
+    - `iterator` is an iterable object that provides the evaluation data in batches.
+    - `criterion` is the loss function that measures the model's performance.
+* Note that evaluate function do not perform any optimization on the model.
+
+2. The function starts by setting the model to evaluation mode with `model.eval()`.
+
+3. It initializes a variable `epoch_loss` to keep track of the accumulated loss during the evaluation.
+
+4. The function enters a `with torch.no_grad()` block, which ensures that no gradients are computed during the evaluation. This saves memory and speeds up the evaluation process since gradients are not needed for parameter updates.
+
+5. The function iterates over the evaluation data provided by the `iterator`. Each iteration retrieves a batch of input sequences (`src`) and target sequences (`trg`).
+
+6. The input sequences (`src`) and target sequences (`trg`) are moved to the appropriate device (e.g., GPU) using `src = src.to(device)` and `trg = trg.to(device)`.
+
+7. The model is then called with `output = model(src, trg, 0)` to obtain the model's predictions for the target sequences. The third argument `0` is passed to indicate that teacher forcing is turned off during evaluation.  During evaluation, teacher forcing is typically turned off to evaluate the model's ability to generate sequences based on its own predictions.
+
+8. The `output` tensor has dimensions `[trg len, batch size, output dim]`. To calculate the loss, the tensor is reshaped to `[trg len - 1, batch size, output dim]` to remove the initial `<bos>` (beginning of sequence) token, which is not used for calculating the loss.
+
+9. The target sequences (`trg`) are also reshaped to `[trg len - 1]` by removing the initial `<bos>` token and making it a contiguous tensor. This matches the shape of the reshaped `output` tensor.
+
+10. The loss between the reshaped `output` and `trg` tensors is calculated using the specified `criterion`.
+
+11. The current batch loss (`loss.item()`) is added to the `epoch_loss` variable.
+
+12. After all the batches have been processed, the function returns the average loss per batch for the entire evaluation, calculated as `epoch_loss / len(list(iterator))`.
