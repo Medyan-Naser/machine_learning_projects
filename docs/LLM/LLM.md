@@ -139,7 +139,7 @@ Thus, embeddings and unembeddings together exceed **1 billion weights**.
 
 ## 7. From Logits to Probabilities: Softmax
 
-The unembedding step produces **logits** — raw, unnormalized scores.  
+The unembedding step produces **logits** — raw, unnormalized scores (predictions).  
 
 **Softmax** converts logits into a valid probability distribution:
 

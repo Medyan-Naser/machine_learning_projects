@@ -11,6 +11,18 @@ PEFT has become the standard approach for working with large pretrained models d
 
 ---
 
+### Training a Tokenizer (Optional)
+
+In many fine-tuning setups, you can reuse a **pretrained tokenizer** (e.g., BERT’s tokenizer).  
+However, if your task involves a **specialized domain** such as medicine, law, or finance, the existing tokenizer may not capture domain-specific terms well.  
+
+In such cases, you may **train a tokenizer on your dataset**. This step is optional, but it helps the model handle domain-specific tokens and improves performance.  
+
+- **When to use**: If your dataset contains specialized vocabulary or tokens not well-represented by the default tokenizer.  
+- **When to skip**: If your domain is close to general text and the pretrained tokenizer already covers it well.  
+
+---
+
 ## Full Fine-Tuning
 
 - **Definition**: Updates all model parameters, layers, and neurons.  
@@ -143,5 +155,57 @@ Represents the minimum number of vectors needed to span a space.
 | **Adapters (Additive)** | Small new modules     | ✅ Yes                         | ✅ High    | Multi-task setups, modular fine-tuning |
 | **Soft Prompting**      | Very small (tokens)   | ✅ Yes                         | ✅ Very High | Lightweight tuning, rapid prototyping |
 | **LoRA / QLoRA / DoRA** | Low-rank updates      | ✅ Yes                         | ✅ Very High | State-of-the-art LLM tuning |
+
+---
+
+# UFT (Unsupervised Fine-Tuning)
+
+## Overview
+Unsupervised fine-tuning adapts a pretrained model to a new domain using **unlabeled text**.  
+The model continues training with its original self-supervised objective (e.g., next-token prediction for LLMs).
+
+Unlabeled data can be used to generate labeled data for like MLM and NSP using libraries from the original data set.
+
+This approach is often used as an **intermediate step** before supervised fine-tuning:  
+1. **Start** – pretrained general-purpose model.  
+2. **UFT** – adapt to new domain with raw text (no labels).  
+3. **SFT / PEFT** – fine-tune on task-specific labeled data.  
+
+---
+
+## Continued Pretraining
+
+- **Definition**: Resume pretraining on domain-specific raw text with the same self-supervised loss.  
+- **Strengths**: Expands the model’s vocabulary, style, and knowledge in a domain (e.g., biomedical, legal, or code).  
+- **Drawbacks**:
+    - Computationally expensive for large models.  
+    - Does not directly optimize for downstream task performance.  
+
+---
+
+## Domain-Adaptive Pretraining (DAPT)
+
+- **Idea**: Adapt a model by pretraining it on a large **domain corpus** (e.g., PubMed articles, financial filings).  
+- **Use Case**: When the model must understand **specialized jargon** or **domain-specific semantics**.  
+- **Limitation**: May still require supervised fine-tuning to align with end tasks.  
+
+---
+
+## Task-Adaptive Pretraining (TAPT)
+
+- **Definition**: Pretrain on the **unlabeled portion of the target dataset** before applying SFT.  
+- **Example**: For a sentiment classifier on movie reviews, run unsupervised fine-tuning on all reviews (without labels), then apply supervised fine-tuning on the labeled subset.  
+- **Benefit**: Reduces domain mismatch and improves sample efficiency in SFT.  
+
+---
+
+## Parameter-Efficient UFT
+
+Unsupervised fine-tuning can also leverage **PEFT techniques**:  
+- **Adapters** – trained on raw text with self-supervised objectives.  
+- **LoRA / QLoRA** – low-rank adaptations optimized during domain pretraining.  
+- **Soft Prompting** – learn prompts directly from unlabeled corpora.  
+
+**Advantage**: Achieves domain adaptation without updating the entire model.  
 
 ---
