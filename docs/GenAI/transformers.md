@@ -69,6 +69,18 @@ Transformers can be built using **encoders**, **decoders**, or both. The choice 
 - More flexible, suitable for tasks that require both comprehension and generation.
 - **Common Use Cases:** Translation, abstractive summarization, text-to-text tasks.
 
+1. **Encoder**
+    - Input: Source sequence (e.g., sentence in English).
+    - Each token is tokenized + embedded + positionally encoded.
+    - The encoder stack (self-attention + feedforward layers) processes the entire sequence bidirectionally.
+    - Output: A sequence of context-rich hidden states representing the source sentence.
+2. **Decoder**
+    - Input: Target sequence tokens (during training, the ground-truth target, shifted right by one token).
+    - The decoder stack has:
+        - Masked self-attention → looks only at previous tokens (autoregressive).
+        - Cross-attention → attends to encoder outputs, so the decoder knows what it’s translating from.
+    - Output: Predictions for the next target token.
+
 ![Transformer](../assets/transformers/transformer.png)
 
 ---
