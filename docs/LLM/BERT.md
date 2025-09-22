@@ -17,6 +17,13 @@ BERT is an **encoder-only Transformer model** designed to deeply understand lang
     - Combined with token and positional embeddings to produce the final input vector for each token.
   - Input format includes `[CLS]` at the start (for classification tasks) and `[SEP]` to separate sentences.
 
+1. **Token Embedding**: Token embedding is the initial representation of each token in a BERT model. It maps each token to a dense vector representation of a fixed size, typically referred to as the embedding size. The token embedding layer in BERT learns the contextual representations of the input tokens. These embeddings capture the semantic meaning of the tokens and their relationships with other tokens in the context.
+
+2. **Positional Embedding**: BERT is a transformer-based model that processes the input tokens in parallel. However, since transformers don't inherently capture the order of tokens, positional embedding is used to inject positional information into the model. It adds a vector representation to each token that encodes its position in the input sequence. The positional embedding allows BERT to understand the sequential order of the tokens and capture their relative positions.
+
+
+3. **Segment Embedding**: BERT can handle sentence pairs or sequences that have distinct segments or parts. To differentiate between different segments, such as sentences or document sections, segment embedding is used. It assigns a unique vector representation to each segment or part of the input. The segment embeddings help BERT understand the relationships between different segments and capture the context within and between them.
+
 **Example:**  
 Input: `"The cat sat on the mat."`  
 Tokenized: `[CLS] The cat sat on the mat [SEP]`
