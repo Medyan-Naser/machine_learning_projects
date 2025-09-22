@@ -15,6 +15,7 @@
     2. `<pad>`: This token represents padding. In sequences of text data, such as sentences or documents, sequences may have different lengths. To create batches of data with uniform dimensions, shorter sequences are often padded with this `<pad>` token to match the length of the longest sequence in the batch.
     3. `<bos>`: This token represents the "beginning of sequence." It is used to indicate the start of a sentence or sequence of tokens. It helps the model understand the beginning of a text sequence.
     4. `<eos>`: This token represents the "end of sequence." It is used to indicate the end of a sentence or sequence of tokens. It helps the model recognize the end of a text sequence.
+    5. `MASK` (Masked Token): Utilized for word replacement in tasks like masked language modeling. It allows models to predict the identity of masked-out words, facilitating learning of bidirectional representations.
 
 - **Practical Notes**:  
     - Tools like **NLTK**, **spaCy**, and **torchtext** support tokenization.  

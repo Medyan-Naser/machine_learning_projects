@@ -57,6 +57,10 @@ Transformers can be built using **encoders**, **decoders**, or both. The choice 
     - Text generation (stories, code, articles)
     - Summarization and translation (when fine-tuned)
     - Autocomplete systems
+- GPT uses trainable positional encodings. Unlike fixed positional encodings (such as sinusoidal encodings used in the original Transformer paper), trainable positional encodings are learned during the model training process.
+- The key difference between the training and inference stages lies in the inputs to the decoder. During training, the decoder benefits from exposure to the ground truth--receiving the exact target sequence tokens incrementally through a technique known as "teacher forcing." This approach is in stark contrast to some other neural network architectures that rely on the network's previous predictions as inputs during training. Once training concludes, the datasets used resemble those employed in more conventional neural network models, providing a familiar foundation for comparison and evaluation.
+- During training, the target language text (the correct output sequence) is also tokenized and converted into numerical tokens. "Teacher forcing" is a training technique where the decoder is provided with the target tokens as input. The decoder uses both the encoder's output and the previously generated tokens (starting with a special start-of-sequence token) to predict the next token in the sequence.
+
 
 ![Decoder](../assets/transformers/decoder.png)
 
@@ -66,6 +70,23 @@ Transformers can be built using **encoders**, **decoders**, or both. The choice 
 - **Common Use Cases:** Translation, abstractive summarization, text-to-text tasks.
 
 ![Transformer](../assets/transformers/transformer.png)
+
+---
+
+## Teacher Forcing in Transformers
+
+Teacher forcing is a training technique originally developed for RNNs and sequence-to-sequence models.  
+- **In RNNs:** At each step, the model can be fed either its own previous prediction or the correct ground-truth token. Teacher forcing means always giving the ground truth, which stabilizes training but creates *exposure bias* (the model never practices recovering from its own mistakes).  
+
+- **In Transformers:** The principle is applied more cleanly thanks to parallelization.  
+  - **Decoder-only models (e.g., GPT):** During training, the full target sequence is shifted by one token. The model predicts each next token while always conditioning on the correct previous tokens, not its own guesses.  
+  - **Encoder–decoder models (e.g., T5, BART):** The decoder receives both the encoder’s outputs and the shifted ground-truth target tokens as input.  
+  - This means Transformers are always trained with the equivalent of teacher forcing, but without step-by-step manual feeding as in RNNs.  
+
+- **Difference from RNNs:** In RNNs, teacher forcing is an explicit option that must be applied during sequential training. In Transformers, the architecture and training objective (shifted targets + masking) *bake in* teacher forcing by default.  
+
+- At inference time, ground truth is unavailable, so the model must autoregressively generate tokens based on its own previous predictions. This shift is what sometimes leads to exposure bias.
+
 
 ---
 
@@ -102,7 +123,7 @@ For each token embedding $e$:
 Each is computed through learned weight matrices:  
 
 \[
-q = W_q \cdot e,\quad k = W_k \cdot e,\quad v = W_v \cdot e
+q = W_q \cdot X,\quad k = W_k \cdot X,\quad v = W_v \cdot X
 \]
 
 The **attention score** between two tokens is the dot product $q \cdot k$.  
