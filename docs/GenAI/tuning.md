@@ -69,6 +69,7 @@ Instead of modifying existing weights, new task-specific modules are added.
 
 ### Adapters
 - Inserted between **transformer attention blocks**.  
+- introduces a low-dimensional bottleneck in a transformer architecture to allow fine-tuning with fewer parameters. It compresses the original high-dimensional embeddings into a lower dimension, applies a non-linear transformation, and then expands it back to the original dimension.
 - Structure:
     1. **Down projection** → reduce dimensionality.  
     2. **Non-linear transformation**.  
@@ -121,15 +122,16 @@ These methods re-express weight matrices using low-rank approximations.
 
 ### QLoRA (Quantized Low-Rank Adaptation)
 QLoRA extends **LoRA** by combining it with **quantization**, enabling efficient fine-tuning of large language models with significantly reduced memory usage. 
+
 - GPU only 
 - Quantization reduces the precision of the numerical values to a finite set of discrete levels, decreasing memory usage and enabling efficient computation on hardware with limited precision. 
 - **Definition**: It applies low-rank adaptation on top of a quantized base model.  
 - **Goal**: Optimize performance while reducing GPU memory requirements by up to **75%**.  
 - **Key Techniques**:
-  - **Quantization**: Reduces numerical precision to a finite set of discrete levels, lowering memory usage and enabling efficient computation.  
-    - Example: 3-bit quantization maps values into 8 levels (e.g., -1, -0.75, …, 1).
-  - **Double Quantization**: Further compresses storage by quantizing the quantization constants themselves.  
-  - **Paged Optimizers**: A memory management trick that dynamically loads/unloads parameters to fit large models into limited GPU memory.  
+    - **Quantization**: Reduces numerical precision to a finite set of discrete levels, lowering memory usage and enabling efficient computation.
+        - Example: 3-bit quantization maps values into 8 levels (e.g., -1, -0.75, …, 1).
+    - **Double Quantization**: Further compresses storage by quantizing the quantization constants themselves.
+    - **Paged Optimizers**: A memory management trick that dynamically loads/unloads parameters to fit large models into limited GPU memory.
 
 **Advantages**:
 - Enables fine-tuning of billion-parameter models on smaller GPUs.  
@@ -140,7 +142,8 @@ QLoRA extends **LoRA** by combining it with **quantization**, enabling efficient
 - **QLoRA**: Combines LoRA with quantization → reduces memory footprint further.  
 - **DoRA**: Dynamically adjusts the rank based on weight magnitude.  
 
-**Key Concept – Rank**:  
+**Key Concept – Rank**:
+The rank of a matrix is the number of dimensions the rows of the matrix "live in."  A square matrix is said to be **full rank** if its rank is equal to the number of its rows or columns.
 Represents the minimum number of vectors needed to span a space.  
 - In PEFT, low-rank decompositions reduce dimensionality while preserving expressiveness.  
 
