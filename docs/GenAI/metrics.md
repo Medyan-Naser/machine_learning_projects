@@ -90,6 +90,10 @@ Validating the results using BLEU score is helpful when there is more than a sin
 
 The BLEU (Bilingual Evaluation Understudy) score is a metric commonly used to evaluate the quality of machine-generated translations by comparing them to one or more reference translations. It measures the similarity between the generated translation and the reference translations based on n-gram matching.
 
+The BLEU score was originally implemented for assessing the quality of translations. However, it may not necessarily be the best metric for instruction fine-tuning in general, but it is nonetheless a useful metric that gives a sense of the alignment between the model generated output and the expected output.
+
+BLEU scores are very challenging to compare from one study to the next because it is a parametrized metric. As a result, you can employ a variant of BLEU called **SacreBLEU** invariant to the metric's parametrization.
+
 The BLEU score is calculated using the following formulas:
 
 1. **Precision**:
