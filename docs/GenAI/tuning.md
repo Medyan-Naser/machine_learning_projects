@@ -118,13 +118,16 @@ These methods re-express weight matrices using low-rank approximations.
 - Adds small trainable components while freezing the original weights.  
 - Captures the most important directions in parameter space.  
 - Learnable paramterers (k x r + r x p) < (k x p)
+        - r is the rank, so learn two small matrices instead of a big one
 - Optimized key, query, and value parameters and is applicable to encoders and ecoders
+- LoRA is a general method, but it's commonly applied to the Attention layer
 
 ### QLoRA (Quantized Low-Rank Adaptation)
 QLoRA extends **LoRA** by combining it with **quantization**, enabling efficient fine-tuning of large language models with significantly reduced memory usage. 
 
 - GPU only 
 - Quantization reduces the precision of the numerical values to a finite set of discrete levels, decreasing memory usage and enabling efficient computation on hardware with limited precision. 
+- The model's parameters are are stored in 2, 3, 4 or 8-bits as opposed to the usual 32-bits
 - **Definition**: It applies low-rank adaptation on top of a quantized base model.  
 - **Goal**: Optimize performance while reducing GPU memory requirements by up to **75%**.  
 - **Key Techniques**:
@@ -142,10 +145,16 @@ QLoRA extends **LoRA** by combining it with **quantization**, enabling efficient
 - **QLoRA**: Combines LoRA with quantization → reduces memory footprint further.  
 - **DoRA**: Dynamically adjusts the rank based on weight magnitude.  
 
-**Key Concept – Rank**:
+### Key Concept – Rank:
 The rank of a matrix is the number of dimensions the rows of the matrix "live in."  A square matrix is said to be **full rank** if its rank is equal to the number of its rows or columns.
 Represents the minimum number of vectors needed to span a space.  
-- In PEFT, low-rank decompositions reduce dimensionality while preserving expressiveness.  
+
+![Rank](../assets/rank_graph.png)
+
+In this scenario, the vectors, despite each having three components, can reach any point on the two-dimensional green plane depicted in the image. These vectors span the green plane, which resides within a two-dimensional subspace. This subspace's dimension, also known as its 'rank', is two—corresponding to the dimensionality of the plane. If the rank were three, any point in the 3D space could be reached by some combination of the columns of $𝐵$. The rank of a matrix can be determined by using the matrix_rank function provided by NumPy.
+
+- In PEFT, low-rank decompositions reduce dimensionality while preserving expressiveness.
+- In linear algebra, rank means the number of independent dimensions in a matrix.
 
 ---
 
