@@ -26,6 +26,7 @@ The generator then combines the retrieved context with the original prompt to pr
       - Example: BERT, GPT, or DPR encoders.
          - The Dense Passage Retrieval (or DPR) Context Encoder and its tokenizer focus on encoding potential answer passages or documents. This encoder creates embeddings from extensive texts, allowing the system to compare these with question embeddings to find the best match.
          - The DPR question encoder and its tokenizer focus on encoding the input questions into fixed-dimensional vector representations, grasping their meaning and context to facilitate answering them.
+         - DPR models are built on the BERT architecture but specialize in dense passage retrieval. They differ from BERT in their training, which focuses on contrastive learning for retrieving relevant passages, while BERT is more general-purpose, handling various NLP tasks.
       - Token embedding + vector averaging are used for compact representations.
 
 2. **Knowledge Base Preparation**
@@ -37,8 +38,10 @@ The generator then combines the retrieved context with the original prompt to pr
 3. **Retrieval**
       - The system compares the query embedding with stored vectors.  
       - Distance metrics:
-         - **Dot Product:** Considers direction + magnitude.  
-         - **Cosine Similarity:** Considers only angular similarity.  
+         - **Dot Product:** Considers direction + magnitude.
+            - This calculation results in a single scalar value. Geometrically, the dot product quantifies how much one vector projects onto another or how close they are to eachother.
+         - **Cosine Similarity:** Considers only angular similarity.
+            - measures the cosine of the angle between two vectors, providing a similarity value that purely reflects their orientation in space regardless of their magnitude. This makes cosine similarity particularly useful in text processing where only the directionality of the vectors (i.e., the orientation of the words in the vector space) matters, not their length.
       - Top **K most relevant chunks** are selected.
 
 4. **Augmented Query Creation**

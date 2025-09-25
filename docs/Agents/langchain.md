@@ -53,7 +53,7 @@ LangChain supports **prompt engineering** to guide LLM behavior.
 - **Few-Shot** – Multiple examples for generalization.  
 - **In-Context Learning** – Model adapts from examples in prompt.  
 - **Chain-of-Thought (CoT)** – Step-by-step reasoning.  
-- **Self-Consistency** – Multiple outputs → pick most consistent.  
+- **Self-Consistency** – Generate Multiple outputs → pick most consistent or accurate.
 
 ---
 

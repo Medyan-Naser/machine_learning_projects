@@ -3,6 +3,7 @@
 ## What Are AI Agents?
 AI Agents are systems that combine Large Language Models (LLMs) with external tools, data sources, and frameworks to accomplish tasks.  
 Unlike standalone LLMs, agents can:
+
 - Retrieve external knowledge
 - Use memory and reasoning steps
 - Interact with APIs, databases, or company-specific policies
