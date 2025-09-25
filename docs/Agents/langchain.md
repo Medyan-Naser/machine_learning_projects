@@ -104,11 +104,13 @@ RAG combines **retrieval of external data** with LLM reasoning to deliver ground
       - Store embeddings for fast similarity search.  
       - Example: **Chroma** for storing embeddings and retrieving nearest neighbors.  
 
-6. **Retrievers**  
+6. **Retrievers**  (is retriever used instead of vector database?)
       - Extract relevant chunks from vector stores.  
       - Types:  
-         - **Vector Store Retriever** – similarity search.  
-         - **Parent Document Retriever** – searches within parent chunks.  
+         - **Vector Store Retriever** – similarity search.
+            - Uses the search methods implemented by a vector store, like similarity search and MMR (Maximum marginal relevance), to query the texts in the vector store.
+         - **Parent Document Retriever** – searches within parent chunks.
+            - strikes that balance by splitting and storing small chunks of data. During retrieval, it first fetches the small chunks but then looks up the parent IDs for them and returns those larger documents.
          - **Self-Query Retriever** – advanced filtering with metadata. 
 
 ---
@@ -130,7 +132,7 @@ LangChain uses **chains, memory, and agents** to build dynamic applications that
 - Sequential chains combine steps into a **unified process** with verbose tracing for debugging.
 
 ### Memory
-- **Memory** allows chains to **store and recall context** across interactions.  
+- **Memory** allows chains to **store and recall context** across interactions. So to remember old prompts in the chat.
 - Each chain:
       - Reads from memory → enhances input with past history.  
       - Writes to memory → saves current input/output for future use.  
