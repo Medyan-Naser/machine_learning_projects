@@ -95,19 +95,20 @@ RAG combines **retrieval of external data** with LLM reasoning to deliver ground
       - Text is split can be at a specific, character, word, sentence, or token. (common ones are bu paragraph change, line change, space, ...)
       - Chunk size is measured by counting characters, words, tokens, or metrics
       - Examples:  
-            - `CharacterTextSplitter` → recursive character-based splitting.  
-            - `MarkdownHeaderTextSplitter` → split by markdown headers.
+         - `CharacterTextSplitter` → recursive character-based splitting.  
+         - `MarkdownHeaderTextSplitter` → split by markdown headers.
       - **Recursive Character Text Splitter**
-            - Uses recursion to split large text until chunks fit size.  
-            - Default separators: paragraph (`\n\n`), new line (`\n`), word, char.  
-            - Example: split by paragraph → then if still above chunk size then by sentence (keep using the list of seperators if needed) → merge chunks under limit if possible.  
+         - Uses recursion to split large text until chunks fit size.  
+         - Default separators: paragraph (`\n\n`), new line (`\n`), word, char.
+         - It processes the large text by attempting to split it by the first character. If the first split results in chunks that are still too large, it moves to the next character and attempts to split by it. This process continues through the list of characters until the chunks are less than the specified chunk size.
+         - Example: split by paragraph → then if still above chunk size then by sentence (keep using the list of seperators if needed) → merge chunks under limit if possible.  
       - **Code Text Splitter**
-            - Based on recursive splitter, specialized for source code.  
-            - Supports multiple languages.  
-            - Requires specifying `language` param.  
+         - Based on recursive splitter, specialized for source code.  
+         - Supports multiple languages.  
+         - Requires specifying `language` param.  
       - **Markdown Header Text Splitter**
-            - Splits markdown by headers, preserving structure.  
-            - Example: groups content under headers like `bar`, `baz`.  
+         - Splits markdown by headers, preserving structure.  
+         - Example: groups content under headers like `bar`, `baz`.  
 
 4. **Embeddings**  
       - Convert document chunks into vector representations capturing semantic meaning.  
@@ -115,16 +116,29 @@ RAG combines **retrieval of external data** with LLM reasoning to deliver ground
 
 5. **Vector Databases**  
       - Store embeddings for fast similarity search.  
-      - Example: **Chroma** for storing embeddings and retrieving nearest neighbors.  
+      - Example: **Chroma DB** and **FIASS DB** for storing embeddings and retrieving nearest neighbors.  
 
-6. **Retrievers**  (is retriever used instead of vector database?)
+6. **Retrievers**
+      - interface to query the DB (or other sources)
       - Extract relevant chunks from vector stores.  
       - Types:  
-         - **Vector Store Retriever** – similarity search.
+         - **Vector Store Retriever**
+            - Similarity search.
             - Uses the search methods implemented by a vector store, like similarity search and MMR (Maximum marginal relevance), to query the texts in the vector store.
-         - **Parent Document Retriever** – searches within parent chunks.
-            - strikes that balance by splitting and storing small chunks of data. During retrieval, it first fetches the small chunks but then looks up the parent IDs for them and returns those larger documents.
-         - **Self-Query Retriever** – advanced filtering with metadata. 
+                - MMR in vector stores is a technique used to balance the relevance and diversity of retrieved results. It selects documents that are both highly relevant to the query and minimally similar to previously selected documents. This approach helps to avoid redundancy and ensures a more comprehensive coverage of different aspects of the query.
+         - **Parent Document Retriever** 
+            - Handles small chunk embeddings while preserving larger context.
+            - Searches within parent chunks
+            - Uses two text splitters: child splitter for embeddings, parent splitter for retrieval.
+            - During retrieval, it first fetches the small chunks but then looks up the parent IDs for them and returns those larger documents.
+         - **Self-Query Retriever** 
+            - Uses metadata filters along with semantic search.  
+            - Converts a query into two parts: a semantic string and a metadata filter.  
+            - Enables retrieval based on both text and metadata, e.g., movies with rating > 8.5.  
+         - **Multi-Query retriever**
+            - Builds on vector retrievers by generating multiple query variations using an LLM.  
+            - Overcomes differences in query wording or embedding limitations.  
+            - Retrieves documents for each query and returns the **unique union** for richer results. 
 
 ---
 
