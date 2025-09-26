@@ -81,7 +81,7 @@ RAG combines **retrieval of external data** with LLM reasoning to deliver ground
 
 ### Document Workflow in LangChain
 1. **Document Object**  
-      - Core container for data.  
+      - Core container for data.
       - Attributes:  
          - `page_content` → document text (string).  
          - `metadata` → extra info (e.g., `document_id`, filename, tags).  
@@ -91,10 +91,23 @@ RAG combines **retrieval of external data** with LLM reasoning to deliver ground
       - Example: Web loader fetches content directly from a URL.  
 
 3. **Text Splitters**  
-      - Break large documents into smaller chunks for retrieval.  
+      - Break large documents into smaller chunks for retrieval. Then combine the small chunks intoa larger chunk aiming at a specific size. also include some overlap.
+      - Text is split can be at a specific, character, word, sentence, or token. (common ones are bu paragraph change, line change, space, ...)
+      - Chunk size is measured by counting characters, words, tokens, or metrics
       - Examples:  
-         - `CharacterTextSplitter` → recursive character-based splitting.  
-         - `MarkdownHeaderTextSplitter` → split by markdown headers.  
+            - `CharacterTextSplitter` → recursive character-based splitting.  
+            - `MarkdownHeaderTextSplitter` → split by markdown headers.
+      - **Recursive Character Text Splitter**
+            - Uses recursion to split large text until chunks fit size.  
+            - Default separators: paragraph (`\n\n`), new line (`\n`), word, char.  
+            - Example: split by paragraph → then if still above chunk size then by sentence (keep using the list of seperators if needed) → merge chunks under limit if possible.  
+      - **Code Text Splitter**
+            - Based on recursive splitter, specialized for source code.  
+            - Supports multiple languages.  
+            - Requires specifying `language` param.  
+      - **Markdown Header Text Splitter**
+            - Splits markdown by headers, preserving structure.  
+            - Example: groups content under headers like `bar`, `baz`.  
 
 4. **Embeddings**  
       - Convert document chunks into vector representations capturing semantic meaning.  

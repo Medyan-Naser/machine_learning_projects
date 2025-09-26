@@ -39,6 +39,11 @@ without collapsing under the weight of billions of parameters.
 An **LLM** is a probabilistic model trained to predict the next token in  
 a sequence, given the preceding context.
 
+**Context length** in LLMs refers to the amount of text or information (prompt)  
+that the model can consider when processing or generating output. LLMs have  
+a fixed context length, meaning they can only take into account a limited  
+amount of text at a time.
+
 Formally:
 $$
 P(\text{next token} \;|\; \text{context})
