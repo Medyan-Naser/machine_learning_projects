@@ -10,6 +10,7 @@ The retriever encodes user-provided prompts and relevant documents into vectors,
 
 The generator then combines the retrieved context with the original prompt to produce a response.  
 
+![RAG](../assets/RAG.png)
 
 ---
 

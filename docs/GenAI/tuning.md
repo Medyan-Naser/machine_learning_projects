@@ -80,6 +80,8 @@ Instead of modifying existing weights, new task-specific modules are added.
 - Modular: adapters can be swapped for different tasks.  
 - Efficient: base model can be reused across multiple domains.  
 
+![Adapters](../assets/adapters.png)
+![Adapters2](../assets/adapters2.png)
 ---
 
 ## 3. Soft Prompting
@@ -111,7 +113,9 @@ Fine-tunes a model for new tasks with extremely small memory cost.
 ---
 
 ## 4. Reparameterization-Based Fine-Tuning
-These methods re-express weight matrices using low-rank approximations.  
+These methods re-express weight matrices using low-rank approximations.
+
+![reparameterization](../assets/reparameterization.png)
 
 ### LoRA (Low-Rank Adaptation)
 - Decomposes weight updates into low-rank matrices.  

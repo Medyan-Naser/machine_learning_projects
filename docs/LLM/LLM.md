@@ -5,6 +5,8 @@ They are built on **transformer architectures**, which enable them to
 process and generate human-like language — and even extend beyond text  
 into images, audio, and multimodal data.
 
+![LLM_tree](../assets/LLM_evolutionary_tree.jpg)
+
 ---
 
 ## 1. The Premise of Deep Learning
