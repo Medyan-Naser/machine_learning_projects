@@ -23,6 +23,7 @@ nav:
   - LLM:
     - Overview: LLM/LLM.md
     - BERT: LLM/BERT.md
+    - XLNet: LLM/XLNet.md
     - NER: LLM/NER.md
     - Tuning: LLM/tuning.md
   - AI Agents:
