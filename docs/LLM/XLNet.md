@@ -36,3 +36,32 @@ XLNet can train on multiple permutations:
 Each token gets predicted with both left and right neighbors in some permutation —  
 giving **bidirectional understanding** like BERT, but through an **autoregressive** approach.
 
+---
+
+## 3. Architecture Highlights
+
+- **Based on Transformer-XL:**  
+  - Adds **segment recurrence** (memory of previous text).  
+  - Uses **relative positional encoding** to track token relationships.  
+  - Handles longer context than BERT or GPT.
+
+- **Two-stream attention:**  
+  - One stream for content, another for prediction — allowing flexible permutation training.
+
+---
+
+## 4. How It Differs
+
+| Feature | **BERT** | **GPT** | **XLNet** |
+|----------|-----------|----------|------------|
+| Objective | Masked LM (autoencoder) | Left-to-right LM | Permutation LM |
+| Direction | Bidirectional | Unidirectional | Bidirectional |
+| [MASK] Tokens | Yes | No | No |
+| Long Context Support | No | Limited | Yes (Transformer-XL) |
+| Pretrain–Finetune Gap | High | Low | Low |
+
+**In short:**  
+- XLNet keeps BERT’s bidirectional understanding.  
+- Keeps GPT’s autoregressive nature.  
+- Adds long-context modeling from Transformer-XL.
+
