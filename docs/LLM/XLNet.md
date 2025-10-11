@@ -65,3 +65,31 @@ giving **bidirectional understanding** like BERT, but through an **autoregressiv
 - Keeps GPT’s autoregressive nature.  
 - Adds long-context modeling from Transformer-XL.
 
+---
+
+## 5. Strengths and Use Cases
+
+**Strengths:**
+- Models dependencies between tokens better than BERT.  
+- Handles longer text sequences efficiently.  
+- No `[MASK]` token mismatch during fine-tuning.
+
+**Use cases:**
+- Question answering  
+- Text classification  
+- Natural language inference  
+- Long document understanding
+
+---
+
+## 6. Limitations
+
+- More complex and computationally expensive training.  
+- Later models (e.g., RoBERTa, T5) achieved similar or better performance with simpler objectives.
+
+---
+
+## 7. Summary
+
+**XLNet bridges BERT and GPT — combining bidirectional context with autoregressive prediction.**  
+It was created to overcome BERT’s masked language modeling issues and to handle longer dependencies effectively.
