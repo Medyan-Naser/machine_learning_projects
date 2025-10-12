@@ -32,7 +32,28 @@ nav:
     - LangChain: Agents/langchain.md
   - Extra:
     - 3B1B: 3Blue1Brown.md
-
+  # --- Networking Fundamentals ---
+  # - Networking:
+  #   - Overview: Networking/overview.md
+    # - OSI_Model: Networking/osi_model.md
+    # - Routing: Networking/routing.md
+    # - Switching: Networking/switching.md
+    # - Protocols:
+    #   - TCP_IP: Networking/Protocols/tcp_ip.md
+    #   - UDP: Networking/Protocols/udp.md
+    #   - HTTP_REST: Networking/Protocols/http_rest.md
+    #   - DNS: Networking/Protocols/dns.md
+    # - Virtualization: Networking/virtualization.md
+    # - Containers: Networking/containers.md
+  # --- AI & ML in Networking ---
+  - AI in Networking:
+    - Overview: AI_Networking/overview.md
+    # - Network_Traffic_Prediction: AI_Networking/traffic_prediction.md
+    # - 5G_Networks: AI_Networking/5g_networks.md
+    # - SDN_ML_Optimization: AI_Networking/sdn_optimization.md
+    # - Network_Security_AI: AI_Networking/security_ai.md
+    # - Fault_Detection: AI_Networking/fault_detection.md
+    # - Edge_Computing: AI_Networking/edge_computing.md
 theme:
   name: material
 
