@@ -49,7 +49,7 @@ nav:
   - AI in Networking:
     - Overview: AI_Networking/overview.md
     # - Network_Traffic_Prediction: AI_Networking/traffic_prediction.md
-    # - 5G_Networks: AI_Networking/5g_networks.md
+    - 5G_Networks: AI_Networking/5g_networks.md
     # - SDN_ML_Optimization: AI_Networking/sdn_optimization.md
     # - Network_Security_AI: AI_Networking/security_ai.md
     # - Fault_Detection: AI_Networking/fault_detection.md
