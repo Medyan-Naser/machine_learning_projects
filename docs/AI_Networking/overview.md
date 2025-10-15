@@ -37,3 +37,30 @@ Examples:
 
 ---
 
+### 4. **Quality of Service (QoS) Optimization**
+AI helps ensure performance consistency across complex environments:
+- Intelligent routing based on live conditions.
+- Adaptive latency management for edge applications.
+- Resource allocation for latency-sensitive workloads (e.g., AR/VR, autonomous systems).
+
+---
+
+### 5. **AI in Software-Defined Networking (SDN)**
+AI integrates tightly with SDN controllers to:
+- Predict and prevent network bottlenecks.
+- Optimize flow rules for efficiency.
+- Enhance policy management through intent-based networking.
+
+This fusion enables **AI-driven SDN**, where control decisions adapt automatically to changing conditions.
+
+---
+
+### 6. **Network Automation**
+By combining AI with orchestration tools, networks can be deployed and managed with minimal human input:
+- Automated configuration management.
+- Predictive maintenance and fault recovery.
+- Policy-driven provisioning.
+
+Frameworks like **Cisco DNA Center**, **Juniper Mist**, and **OpenDaylight** already leverage AI for intent-based automation.
+
+---
