@@ -1,39 +1,38 @@
 import streamlit as st
 import os
 import logging
+from tempfile import NamedTemporaryFile
 from langchain_community.document_loaders import UnstructuredPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 from langchain_ollama import OllamaEmbeddings
-from langchain_core.prompts import ChatPromptTemplate, PromptTemplate
+from langchain_core.prompts import ChatPromptTemplate
 from langchain_ollama import ChatOllama
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 import ollama
+import uuid
+import shutil
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
 # Constants
-DOC_PATH = "./data/BOI.pdf"
 MODEL_NAME = "llama3.2"
 EMBEDDING_MODEL = "nomic-embed-text"
 VECTOR_STORE_NAME = "simple-rag"
-PERSIST_DIRECTORY = "./chroma_db"
 
-
-def ingest_pdf(doc_path):
+def ingest_pdf(file_path):
     """Load PDF documents."""
-    if os.path.exists(doc_path):
-        loader = UnstructuredPDFLoader(file_path=doc_path)
+    try:
+        loader = UnstructuredPDFLoader(file_path=file_path)
         data = loader.load()
         logging.info("PDF loaded successfully.")
         return data
-    else:
-        logging.error(f"PDF file not found at path: {doc_path}")
-        st.error("PDF file not found.")
+    except Exception as e:
+        logging.error(f"Error loading PDF: {str(e)}")
+        st.error("Failed to load PDF.")
         return None
-
 
 def split_documents(documents):
     """Split documents into smaller chunks."""
@@ -42,56 +41,44 @@ def split_documents(documents):
     logging.info("Documents split into chunks.")
     return chunks
 
+def create_vector_db(pdf_files):
+    """Create a temporary vector database from uploaded PDFs."""
+    if not pdf_files:
+        return None
 
-@st.cache_resource
-def load_vector_db():
-    """Load or create the vector database."""
-    # Pull the embedding model if not already available
     ollama.pull(EMBEDDING_MODEL)
-
     embedding = OllamaEmbeddings(model=EMBEDDING_MODEL)
 
-    if os.path.exists(PERSIST_DIRECTORY):
-        vector_db = Chroma(
-            embedding_function=embedding,
-            collection_name=VECTOR_STORE_NAME,
-            persist_directory=PERSIST_DIRECTORY,
-        )
-        logging.info("Loaded existing vector database.")
-    else:
-        # Load and process the PDF document
-        data = ingest_pdf(DOC_PATH)
-        if data is None:
-            return None
+    temp_dir = f"./temp_chroma_{uuid.uuid4().hex}"
+    os.makedirs(temp_dir, exist_ok=True)
 
-        # Split the documents into chunks
-        chunks = split_documents(data)
+    all_chunks = []
+    for pdf_file in pdf_files:
+        data = ingest_pdf(pdf_file)
+        if data:
+            chunks = split_documents(data)
+            all_chunks.extend(chunks)
 
-        vector_db = Chroma.from_documents(
-            documents=chunks,
-            embedding=embedding,
-            collection_name=VECTOR_STORE_NAME,
-            persist_directory=PERSIST_DIRECTORY,
-        )
-        vector_db.persist()
-        logging.info("Vector database created and persisted.")
+    if not all_chunks:
+        return None
+
+    vector_db = Chroma.from_documents(
+        documents=all_chunks,
+        embedding=embedding,
+        collection_name=VECTOR_STORE_NAME,
+        persist_directory=temp_dir,
+    )
+    logging.info("Temporary vector database created.")
     return vector_db
 
-
 def create_retriever(vector_db):
-    """Create a simple retriever (no multi-query)."""
-    retriever = vector_db.as_retriever()
-    logging.info("Simple retriever created.")
-    return retriever
+    return vector_db.as_retriever()
 
 def create_chain(retriever, llm):
-    """Create the chain with preserved syntax."""
-    # RAG prompt
     template = """Answer the question based ONLY on the following context:
 {context}
 Question: {question}
 """
-
     prompt = ChatPromptTemplate.from_template(template)
 
     chain = (
@@ -100,47 +87,68 @@ Question: {question}
         | llm
         | StrOutputParser()
     )
-
-    logging.info("Chain created with preserved syntax.")
     return chain
-
 
 def main():
     st.title("Document Assistant")
 
-    # User input
+    # Initialize session state
+    if "uploaded_files" not in st.session_state:
+        st.session_state.uploaded_files = []
+    if "vector_db" not in st.session_state:
+        st.session_state.vector_db = None
+
+    # Initialize LLM
+    llm = ChatOllama(model=MODEL_NAME)
+
+    # Upload PDFs (multiple)
+    uploaded_files = st.file_uploader("Upload PDF files", type=["pdf"], accept_multiple_files=True)
+
+    # Add new files to session_state
+    new_files = []
+    if uploaded_files:
+        for file in uploaded_files:
+            if file.name not in [f.name for f in st.session_state.uploaded_files]:
+                # Save temporary file
+                tmp = NamedTemporaryFile(delete=False, suffix=".pdf")
+                tmp.write(file.read())
+                tmp_path = tmp.name
+                tmp.close()
+                new_files.append(tmp_path)
+                st.session_state.uploaded_files.append(file)
+
+    # Process only when new files are added
+    if new_files:
+        with st.spinner("Processing new PDF files..."):
+            if st.session_state.vector_db:
+                # Merge new files into existing vector DB
+                new_db = create_vector_db(new_files)
+                # Note: For simplicity we just overwrite with combined new DB
+                st.session_state.vector_db = new_db
+            else:
+                st.session_state.vector_db = create_vector_db(new_files)
+
+            st.success("PDF(s) processed and ready for questions!")
+
+    # User question
     user_input = st.text_input("Enter your question:", "")
 
     if user_input:
         with st.spinner("Generating response..."):
             try:
-                # Initialize the language model
-                llm = ChatOllama(model=MODEL_NAME)
-
-                # Load the vector database
-                vector_db = load_vector_db()
-                if vector_db is None:
-                    st.error("Failed to load or create the vector database.")
-                    return
-
-                # Create the retriever
-                # retriever = create_retriever(vector_db, llm)
-                retriever = create_retriever(vector_db)
-
-
-                # Create the chain
-                chain = create_chain(retriever, llm)
-
-                # Get the response
-                response = chain.invoke(input=user_input)
+                if st.session_state.vector_db:
+                    retriever = create_retriever(st.session_state.vector_db)
+                    chain = create_chain(retriever, llm)
+                    response = chain.invoke(input=user_input)
+                else:
+                    response = llm.chat(user_input)
 
                 st.markdown("**Assistant:**")
                 st.write(response)
             except Exception as e:
                 st.error(f"An error occurred: {str(e)}")
     else:
-        st.info("Please enter a question to get started.")
-
+        st.info("You can ask a question even without uploading a PDF.")
 
 if __name__ == "__main__":
     main()
