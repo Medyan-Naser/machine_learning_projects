@@ -39,9 +39,29 @@ LangChain = **reason + retrieve + act**.
 6. **Chains** – Sequences of LLM calls, retrievers, and tools.  
 7. **Agents** – LLM-powered decision makers choosing actions.  
 8. **Memory** – Keeps past interactions for continuity.  
-9. **Tools** – External APIs, databases, search engines.  
-10. **LangChain Core** – Expression language and abstractions.  
-11. **LangChain Community** – Third-party integrations.  
+9. **Tools** – External utilities that models can call (see Tools section below).  
+10. **Toolkits** – Collections of related tools for a common purpose or integration.  
+11. **LangChain Core** – Expression language and abstractions.  
+12. **LangChain Community** – Third-party integrations.  
+
+---
+
+## Tools
+
+Tools are utilities designed to be called by a model—inputs are structured so models can generate them, and outputs are passed back to the model. They perform actions like searching the web, querying databases, or executing code.
+
+### Ways to Initialize Tools
+
+1. **Built-in Tools** – Use pre-built tools like `WikipediaQueryRun` for common tasks.  
+2. **`load_tools` Function** – Load multiple tools at once (e.g., `wikipedia`, `serpapi`, `llm-math`).  
+3. **Custom Tools with `@tool` Decorator** – Wrap any function as a tool the LLM can invoke. This gives you manual control over tool inputs and validation.  
+4. **Tools as OpenAI Functions** – Convert tools using `convert_to_openai_function`, or use `bind_functions`/`bind_tools` to bind tools to OpenAI chat models.
+
+### Popular External Tools & Toolkits
+
+- **Wikipedia** – Fetch summaries and article information.  
+- **Search Engines** – Bing, Google, DuckDuckGo for real-time search results.  
+- **APIs** – Weather data, financial data, and more.
 
 ---
 
@@ -179,6 +199,29 @@ LangChain uses **chains, memory, and agents** to build dynamic applications that
       - Transforms natural language queries into Python code.  
       - Executes on a DataFrame (e.g., "How many rows?" → returns 139).  
       - `verbose=True` shows model reasoning process.  
+
+---
+
+## Natural Language Interfaces for Data
+
+LangChain enables querying data using natural language, making data analysis accessible without deep technical skills.
+
+### Pandas DataFrame Agent
+
+- Analyze and visualize data by asking natural language questions.  
+- The agent generates Python code that directly interacts with your DataFrame—filtering, aggregating, and visualizing.  
+- Created with `create_pandas_dataframe_agent`.
+
+### SQL Agent
+
+- Translates natural language queries to SQL and retrieves results from databases.  
+- Setup: Create a Python virtual environment → install LangChain and LLM libraries → launch SQL server → build a database connector.
+
+### Best Practices
+
+- Use **sandboxed environments** for code execution.  
+- Design **clear prompts** and **validate LLM analysis** with human expertise.  
+- Iteratively refine queries for accurate results.
 
 ---
 
