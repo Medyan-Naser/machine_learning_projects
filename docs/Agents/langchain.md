@@ -264,6 +264,47 @@ LangGraph is an advanced framework for building **stateful, multiagent applicati
 
 ---
 
+## Agent Types
+
+### Reflection Agents
+
+Reflection agents iteratively improve outputs through internal critique using a feedback loop.
+
+**Components:**
+- **Generator** – Produces initial content  
+- **Reflector** – Provides critical feedback (often role-played as a teacher/critic)
+
+**Process:** Generate → Reflect → Revise → Repeat until satisfactory.
+
+Agent state is defined using `MessageGraph`, tracking conversation and accumulating messages across iterations. Graph construction involves defining nodes, connecting with edges, setting entry points, and using router nodes for dynamic decisions.
+
+### Reflexion Agents
+
+Reflexion agents extend reflection by adding **external grounding with citations and real-time data**.
+
+**Three-Step Cycle:**
+
+| Step | Description |
+|------|-------------|
+| **Draft** | Generate answer and propose search queries/tool calls |
+| **Execute Tools** | Run queries (e.g., web search), add results to context |
+| **Revise** | Analyze draft + fetched info, list missing/incorrect parts, add references |
+
+**Key Differences from Reflection:**
+- Uses external tools (e.g., Tavily search) for real-time data  
+- Produces structured schema-based output (response, critique, query fields)  
+- Includes citations and references to support claims  
+- **Responder** generates initial structured output → **Revisor** refines with tool outputs
+
+**Schemas:** `AnswerQuestion` and `Reflection` schemas capture answers, flag missing details, and generate queries.
+
+### ReAct Agents
+
+ReAct (Reason + Act) agents interleave thinking and action in a single workflow.
+
+- Alternates between **internal reasoning** (chain-of-thought) and **actions** (tool/function calls)  
+- Each cycle: decide action → execute → reason on updated state  
+- No separate reflector step—reasoning and acting are integrated
 
 ---
 
