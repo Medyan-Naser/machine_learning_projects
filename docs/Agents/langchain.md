@@ -225,6 +225,48 @@ LangChain enables querying data using natural language, making data analysis acc
 
 ---
 
+## Generative AI vs Agentic AI
+
+- **Generative AI** – Reactive system that creates content (text, images) based on prompts.  
+- **Agentic AI** – Proactive system that uses prompts to pursue goals autonomously.
+
+---
+
+## LangGraph
+
+LangGraph is an advanced framework for building **stateful, multiagent applications**. It extends LangChain's capabilities by enabling complex workflows with branching, looping, and persistent state.
+
+### Core Concepts
+
+| Component | Description |
+|-----------|-------------|
+| **Nodes** | Functions that perform computation and may modify state |
+| **Edges** | Define execution flow between nodes, passing updated state |
+| **State** | Shared memory that persists across nodes (inputs, intermediate values, outputs) |
+| **Conditional Edges** | Enable dynamic routing based on runtime decisions |
+
+### Key Capabilities
+
+- **Looping & Branching** – Dynamic decision-making at runtime  
+- **State Persistence** – Maintains context over long interactions  
+- **Human-in-the-Loop** – Pause for human input and resume execution  
+- **Time Travel** – Debug by replaying past states  
+- **Workflow Visualization** – View graphs as Mermaid diagrams
+
+### Building a LangGraph Application
+
+1. Create a `StateGraph` object  
+2. Add nodes (functions that process state)  
+3. Connect nodes with edges  
+4. Set an entry point  
+5. Compile into a runnable application  
+6. Invoke with initial state
+
+---
+
+
+---
+
 ## Generative models
 Generative models understand and capture the underlying patterns and data distribution to resemble the given data sets. Generative models are applicable in generating images, text, and music, augmenting data, discovering drugs, and detecting anomalies. 
 
