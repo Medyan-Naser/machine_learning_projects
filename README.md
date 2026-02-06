@@ -53,4 +53,43 @@ Transforming grayscale images into vibrant, colorized versions using neural netw
 | [**Salary Prediction**](Salary%20Prediction%20Using%20Regression%20Models/) | Regression models to predict employee salaries | Linear, Polynomial, SVR, Random Forest |
 | [**Weather Prediction**](Weather%20Prediction/) | Predicting rainfall in Australian cities using classification models | Random Forest, Logistic Regression, GridSearchCV |
 
+### 🎯 Clustering & Unsupervised Learning
+
+| Project | Description | Key Technologies |
+|---------|-------------|------------------|
+| [**Customer Segmentation**](Customer%20Segmentation%20Using%20Clustering%20Methods/) | Segmenting mall customers using clustering techniques | K-Means, Hierarchical Clustering |
+| [**Movie Rating Prediction**](Movie%20Rating%20Prediction%20using%20Unsupervised%20Learning/) | Predicting movie preferences using Autoencoders and Boltzmann Machines | PyTorch, Autoencoders, RBM |
+
+### 💬 NLP & Language Models
+
+| Project | Description | Key Technologies |
+|---------|-------------|------------------|
+| [**Natural Language Processing**](Natural-Language/) | Sentiment classification of restaurant reviews | NLTK, Random Forest, Maximum Entropy |
+| [**PPO Fine-Tuning for Sentiment**](PPO%20Fine%20Tuning%20for%20Positive%20and%20Negative%20Sentiment/) | Training "Happy" and "Pessimistic" LLMs using Proximal Policy Optimization | TRL, Transformers, PPO, RLHF |
+| [**RAG QA Bot**](RAG%20QA%20Bot/) | Document-based Q&A chatbot using Retrieval-Augmented Generation | LangChain, Ollama, ChromaDB, Streamlit |
+
+---
+
+## 🛠️ Technologies & Tools
+
+<table>
+<tr>
+<td>
+
+### Languages & Frameworks
+- **Python** - Primary language
+- **TensorFlow / Keras** - Deep learning
+- **PyTorch** - Neural networks
+- **Scikit-learn** - Traditional ML
+
+</td>
+<td>
+
+### Data & Visualization
+- **Pandas / NumPy** - Data manipulation
+- **Matplotlib / Seaborn** - Visualization
+- **OpenCV / PIL** - Image processing
+
+</td>
+<td>
 
