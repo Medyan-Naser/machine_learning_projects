@@ -22,6 +22,41 @@ class DocumentProcessor:
         if total_size > constants.MAX_TOTAL_SIZE:
             raise ValueError(f"Total size exceeds {constants.MAX_TOTAL_SIZE//1024//1024}MB limit")
 
+    def process(self, files: List) -> List:
+        """Process files with caching for subsequent queries"""
+        self.validate_files(files)
+        all_chunks = []
+        seen_hashes = set()
+        
+        for file in files:
+            try:
+                # Generate content-based hash for caching
+                with open(file.name, "rb") as f:
+                    file_hash = self._generate_hash(f.read())
+                
+                cache_path = self.cache_dir / f"{file_hash}.pkl"
+                
+                if self._is_cache_valid(cache_path):
+                    logger.info(f"Loading from cache: {file.name}")
+                    chunks = self._load_from_cache(cache_path)
+                else:
+                    logger.info(f"Processing and caching: {file.name}")
+                    chunks = self._process_file(file)
+                    self._save_to_cache(chunks, cache_path)
+                
+                # Deduplicate chunks across files
+                for chunk in chunks:
+                    chunk_hash = self._generate_hash(chunk.page_content.encode())
+                    if chunk_hash not in seen_hashes:
+                        all_chunks.append(chunk)
+                        seen_hashes.add(chunk_hash)
+                        
+            except Exception as e:
+                logger.error(f"Failed to process {file.name}: {str(e)}")
+                continue
+                
+        logger.info(f"Total unique chunks: {len(all_chunks)}")
+        return all_chunks
 
     def _process_file(self, file) -> List:
         """Original processing logic with Docling"""
