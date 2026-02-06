@@ -93,3 +93,57 @@ Transforming grayscale images into vibrant, colorized versions using neural netw
 </td>
 <td>
 
+### Specialized Tools
+- **NLTK** - NLP
+- **LangChain** - LLM applications
+- **Minisom** - Self-organizing maps
+- **XGBoost** - Gradient boosting
+
+</td>
+</tr>
+</table>
+
+---
+
+## 📈 Project Metrics
+
+| Category | Count | Examples |
+|----------|-------|----------|
+| 🧠 Deep Learning | 5 | MNIST, RNN Stock Prediction, Fruit Classification |
+| 📊 Classification | 3 | Customer Purchases, Weather, NLP |
+| 📉 Regression | 1 | Salary Prediction |
+| 🎯 Clustering | 2 | Customer Segmentation, Movie Ratings |
+| 💬 NLP/LLM | 2 | PPO Fine-Tuning, RAG QA Bot |
+
+---
+
+## 🚀 Getting Started
+
+```bash
+# Clone the repository
+git clone https://github.com/Medyan-Naser/machine_learning_projects.git
+
+# Navigate to a project
+cd machine_learning_projects/<project-folder>
+
+# Install dependencies (example)
+pip install -r requirements.txt
+
+# Run the project
+python <script_name>.py
+```
+
+---
+
+## 📄 Documentation
+
+Detailed documentation for each project is available in the [docs](docs/) folder, including:
+- Algorithm explanations
+- Implementation details
+- Results and analysis
+
+---
+
+## 📧 Contact
+
+Feel free to explore the projects and reach out with any questions or feedback!
