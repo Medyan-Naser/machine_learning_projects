@@ -1,31 +1,56 @@
-# Machine Learning Projects
+# 🤖 Machine Learning Projects
 
-This repository is a collection of various machine learning projects I have worked on. Each project focuses on a unique problem and demonstrates my ability to apply machine learning concepts, data analysis techniques, and advanced tools to real-world datasets. 
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white)
+![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)
+![Keras](https://img.shields.io/badge/Keras-D00000?style=for-the-badge&logo=keras&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
 
-## Projects Overview
+A comprehensive collection of **13 machine learning projects** showcasing expertise in supervised learning, unsupervised learning, deep learning, NLP, computer vision, and reinforcement learning.
 
-| Project Name                     | Description                                                                 |
-|----------------------------------|-----------------------------------------------------------------------------|
-| **Classification of Customer Purchases Using Multiple Methods**  | Predicting whether a customer will buy a car using various classification techniques.  | 
-| **Coloring Black & White Images** | Developing deep learning models to add color to grayscale images, enhancing their visual appeal. |
-| **Customer Segmentation Using Clustering Methods** | Applying clustering techniques to segment mall customers based on their purchasing behaviors and demographics. |
-| **Fraud Detection using Artificial Neural Networks**  | Analyzing bank customer data using ANN for pattern detection and SOM to identify potential fraud. |
-| **MNIST Digit Classifier**  |  Training a neural network to classify handwritten digits from the MNIST dataset. |
-| **Movie Rating Prediction using Unsupervised Learning**  | Predicting if a customer will like a movie using Autoencoders and Boltzmann Machines. |
-| **Natural-Language**  | Using Random Forest and Maximum Entropy models to classify reviews as positive or negative. |
-| **Salary Prediction Using Regression Models** | Building regression models to predict employee salaries based on key features like experience, education, and role. |
-| **Stock Prediction using Recurrent Neural Network**  | Applying Recurrent Neural Networks (RNNs) to forecast stock prices based on historical data. |
+---
 
-## Technologies and Tools Used
+## 🎯 Featured Project Highlights
 
-Here is an overview of the technologies and tools I utilized across the projects:
+### Neural Network Learning Visualization (MNIST Digit Classifier)
 
-- **Programming Languages**: Python  
-- **Data Analysis and Manipulation**: Pandas, NumPy  
-- **Data Visualization**: Matplotlib, Pylab  
-- **Machine Learning**: Scikit-learn, XGBoost, Minisom  
-- **Deep Learning**: TensorFlow, Keras, PyTorch  
-- **Natural Language Processing**: NLTK  
-- **Image Processing and Computer Vision**: OpenCV, PIL  
-- **Scientific Computing**: Scipy  
-- **GUI Development**: Tkinter 
+Watch how the neural network learns to recognize handwritten digits! The weight matrices evolve from random noise to meaningful patterns:
+
+| Before Training | After Training |
+|:---------------:|:--------------:|
+| ![Before Training](MNIST%20Digit%20Classifier/images/before_training.png) | ![After Training](MNIST%20Digit%20Classifier/images/after_training.png) |
+| *Random weight initialization* | *Learned digit patterns emerge* |
+
+### Image Colorization with Deep Learning
+
+Transforming grayscale images into vibrant, colorized versions using neural networks:
+
+<p align="center">
+  <img src="Coloring%20Black%20%26%20White%20Images/result.png" alt="Colorized Tiger" width="400"/>
+  <br>
+  <em>AI-generated colorization of a grayscale image</em>
+</p>
+
+---
+
+## 📂 Projects Overview
+
+### 🔮 Deep Learning & Neural Networks
+
+| Project | Description | Key Technologies |
+|---------|-------------|------------------|
+| [**MNIST Digit Classifier**](MNIST%20Digit%20Classifier/) | Training neural networks to classify handwritten digits with weight visualization | TensorFlow, Keras |
+| [**Coloring Black & White Images**](Coloring%20Black%20%26%20White%20Images/) | Deep learning models to add color to grayscale images | OpenCV, Deep Learning |
+| [**Fraud Detection using ANN**](Fraud%20Detection%20using%20Artificial%20Neural%20Networks%20/) | Analyzing bank customer data using ANN and Self-Organizing Maps | Keras, Minisom |
+| [**Stock Prediction using RNN**](Stock%20Prediction%20using%20Recurrent%20Neural%20Network/) | Forecasting stock prices using LSTM networks | TensorFlow, LSTM |
+| [**Fruit Classification**](Fruit%20Classification/) | Transfer learning with VGG16 for multi-class fruit classification (84% accuracy) | TensorFlow, VGG16, Transfer Learning |
+
+### 📊 Classification & Regression
+
+| Project | Description | Key Technologies |
+|---------|-------------|------------------|
+| [**Customer Purchase Classification**](Classification%20of%20Customer%20Purchases%20Using%20Multiple%20Methods/) | Predicting customer purchases using 6 different ML algorithms | SVM, KNN, Random Forest, Naive Bayes |
+| [**Salary Prediction**](Salary%20Prediction%20Using%20Regression%20Models/) | Regression models to predict employee salaries | Linear, Polynomial, SVR, Random Forest |
+| [**Weather Prediction**](Weather%20Prediction/) | Predicting rainfall in Australian cities using classification models | Random Forest, Logistic Regression, GridSearchCV |
+
+
