@@ -92,4 +92,103 @@ class VerificationAgent:
             print(f"Error parsing verification response: {e}")
             return None
 
-  
+    def format_verification_report(self, verification: Dict) -> str:
+        """
+        Format the verification report dictionary into a readable paragraph.
+        """
+        supported = verification.get("Supported", "NO")
+        unsupported_claims = verification.get("Unsupported Claims", [])
+        contradictions = verification.get("Contradictions", [])
+        relevant = verification.get("Relevant", "NO")
+        additional_details = verification.get("Additional Details", "")
+
+        report = f"**Supported:** {supported}\n"
+        if unsupported_claims:
+            report += f"**Unsupported Claims:** {', '.join(unsupported_claims)}\n"
+        else:
+            report += f"**Unsupported Claims:** None\n"
+
+        if contradictions:
+            report += f"**Contradictions:** {', '.join(contradictions)}\n"
+        else:
+            report += f"**Contradictions:** None\n"
+
+        report += f"**Relevant:** {relevant}\n"
+
+        if additional_details:
+            report += f"**Additional Details:** {additional_details}\n"
+        else:
+            report += f"**Additional Details:** None\n"
+
+        return report
+
+    def check(self, answer: str, documents: List[Document]) -> Dict:
+        """
+        Verify the answer against the provided documents.
+        """
+        print(f"VerificationAgent.check called with answer='{answer}' and {len(documents)} documents.")
+
+        context = "\n\n".join([doc.page_content for doc in documents])
+        print(f"Combined context length: {len(context)} characters.")
+
+        prompt = self.generate_prompt(answer, context)
+        print("Prompt created for the LLM.")
+
+        try:
+            print("Sending prompt to the model...")
+            response = self.model.invoke(prompt)
+            print("LLM response received.")
+        except Exception as e:
+            print(f"Error during model inference: {e}")
+            raise RuntimeError("Failed to verify answer due to a model error.") from e
+
+        try:
+            llm_response = response.content.strip()
+            print(f"Raw LLM response:\n{llm_response}")
+        except (IndexError, KeyError, AttributeError) as e:
+            print(f"Unexpected response structure: {e}")
+            verification_report = {
+                "Supported": "NO",
+                "Unsupported Claims": [],
+                "Contradictions": [],
+                "Relevant": "NO",
+                "Additional Details": "Invalid response structure from the model."
+            }
+            verification_report_formatted = self.format_verification_report(verification_report)
+            print(f"Verification report:\n{verification_report_formatted}")
+            print(f"Context used: {context}")
+            return {
+                "verification_report": verification_report_formatted,
+                "context_used": context
+            }
+
+        sanitized_response = self.sanitize_response(llm_response) if llm_response else ""
+        if not sanitized_response:
+            print("LLM returned an empty response.")
+            verification_report = {
+                "Supported": "NO",
+                "Unsupported Claims": [],
+                "Contradictions": [],
+                "Relevant": "NO",
+                "Additional Details": "Empty response from the model."
+            }
+        else:
+            verification_report = self.parse_verification_response(sanitized_response)
+            if verification_report is None:
+                print("LLM did not respond with the expected format. Using default verification report.")
+                verification_report = {
+                    "Supported": "NO",
+                    "Unsupported Claims": [],
+                    "Contradictions": [],
+                    "Relevant": "NO",
+                    "Additional Details": "Failed to parse the model's response."
+                }
+
+        verification_report_formatted = self.format_verification_report(verification_report)
+        print(f"Verification report:\n{verification_report_formatted}")
+        print(f"Context used: {context}")
+
+        return {
+            "verification_report": verification_report_formatted,
+            "context_used": context
+        }
