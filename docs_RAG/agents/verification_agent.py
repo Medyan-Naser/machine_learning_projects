@@ -54,3 +54,42 @@ class VerificationAgent:
         """
         return prompt
 
+    def parse_verification_response(self, response_text: str) -> Dict:
+        """
+        Parse the LLM's verification response into a structured dictionary.
+        """
+        try:
+            lines = response_text.split('\n')
+            verification = {}
+            for line in lines:
+                if ':' in line:
+                    key, value = line.split(':', 1)
+                    key = key.strip().capitalize()
+                    value = value.strip()
+                    if key in {"Supported", "Unsupported claims", "Contradictions", "Relevant", "Additional details"}:
+                        if key in {"Unsupported claims", "Contradictions"}:
+                            if value.startswith('[') and value.endswith(']'):
+                                items = value[1:-1].split(',')
+                                items = [item.strip().strip('"').strip("'") for item in items if item.strip()]
+                                verification[key] = items
+                            else:
+                                verification[key] = []
+                        elif key == "Additional details":
+                            verification[key] = value
+                        else:
+                            verification[key] = value.upper()
+            for key in ["Supported", "Unsupported Claims", "Contradictions", "Relevant", "Additional Details"]:
+                if key not in verification:
+                    if key in {"Unsupported Claims", "Contradictions"}:
+                        verification[key] = []
+                    elif key == "Additional Details":
+                        verification[key] = ""
+                    else:
+                        verification[key] = "NO"
+
+            return verification
+        except Exception as e:
+            print(f"Error parsing verification response: {e}")
+            return None
+
+  
