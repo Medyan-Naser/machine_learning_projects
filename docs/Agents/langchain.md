@@ -387,6 +387,60 @@ agent = initialize_agent(
 )
 ```
 
+### AgentExecutor
+
+Managing the ReAct loop manually is cumbersome. The **AgentExecutor** wraps the agent and toolset, handling the full tool-use loop automatically.
+
+**What AgentExecutor handles:**
+1. Runs the agent to get the next action
+2. Executes the selected tool
+3. Takes the result (observation) and feeds it back to the agent
+4. Repeats until a final answer is reached
+5. Tracks intermediate steps throughout
+
+**Without AgentExecutor**, you'd manually:
+- Check if the agent returned a tool call or final answer
+- Run the tool and capture output
+- Feed results back to the agent
+- Manage state across iterations
+
+```python
+from langchain.agents import AgentExecutor
+
+agent_executor = AgentExecutor(
+    agent=agent,
+    tools=tools,
+    verbose=True,
+    max_iterations=10,
+    handle_parsing_errors=True
+)
+
+result = agent_executor.invoke({"input": "What is 25 + 15, then multiply by 2?"})
+```
+
+### Tool Execution Flow
+
+Understanding how tools execute in sequence is essential for building effective agents:
+
+```
+User Query
+    ↓
+Agent (LLM) decides first tool
+    ↓
+Tool 1 executes → Result added to context
+    ↓
+Agent decides next tool (with updated context)
+    ↓
+Tool 2 executes → Result added to context
+    ↓
+... (repeat until no more tools needed)
+    ↓
+Final LLM call with: User Query + All Tool Results
+    ↓
+Final Response
+```
+
+**Key insight:** Each tool result is accumulated and passed to subsequent decisions, allowing the agent to build up context progressively.
 
 ---
 
