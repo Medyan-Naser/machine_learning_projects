@@ -50,5 +50,61 @@
 
 ---
 
+## **🎯 Why Use DocChat Instead of ChatGPT or DeepSeek?**  
 
+| Feature | **ChatGPT/DeepSeek** ❌ | **DocChat** ✅ |
+|---------|-----------------|---------|
+| Retrieves from uploaded documents | ❌ No | ✅ Yes |
+| Handles multiple documents | ❌ No | ✅ Yes |
+| Extracts structured data from PDFs | ❌ No | ✅ Yes |
+| Prevents hallucinations | ❌ No | ✅ Yes |
+| Fact-checks answers | ❌ No | ✅ Yes |
+| Detects out-of-scope queries | ❌ No | ✅ Yes |
+
+🚀 **DocChat is built for enterprise-grade document intelligence, research, and compliance workflows.**  
+
+---
+
+## **📦 Installation**  
+
+### **1️⃣ Clone the Repository**  
+```bash
+git clone https://github.com/HaileyTQuach/docchat-docling.git docchat
+cd docchat
+```
+
+### **2️⃣ Set Up Virtual Environment**  
+```bash
+python3.11 -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+### **3️⃣ Install Dependencies**  
+```bash
+pip install -r requirements.txt
+```
+
+### **4️⃣ Install and Configure Ollama**  
+DocChat now uses **Ollama** for fully local AI processing (no API costs or keys needed!):
+
+```bash
+# Install Ollama (if not already installed)
+curl -fsSL https://ollama.com/install.sh | sh
+
+# Pull required models
+ollama pull llama3.2
+ollama pull nomic-embed-text
+
+# Ensure Ollama is running
+ollama serve
+```
+
+### **5️⃣ Run the Application** 
+```bash
+python app.py
+```
+
+DocChat will be accessible at `http://127.0.0.1:5000`.
+
+📖 **See [OLLAMA_MIGRATION.md](OLLAMA_MIGRATION.md) for detailed migration information and model customization options.**
 
