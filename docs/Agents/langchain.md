@@ -357,6 +357,37 @@ ReAct (Reason + Act) agents interleave thinking and action in a single workflow.
 - Each cycle: decide action → execute → reason on updated state  
 - No separate reflector step—reasoning and acting are integrated
 
+#### The ReAct Reasoning Loop
+
+ReAct-style agents follow a step-by-step reasoning loop with four phases:
+
+| Phase       | Description                                    |
+|-------------|------------------------------------------------|
+| **Reason**  | Think about the task and current state         |
+| **Act**     | Use a tool to perform an action                |
+| **Observe** | Check the tool's output                        |
+| **Plan**    | Decide what to do next based on observations   |
+
+**Example:** When asked to analyze CSV files, the agent's first instinct is to gather context—listing available files—before attempting complex operations. This isn't a failure; it's how the agent is designed to operate—reasoning one step at a time based on feedback.
+
+#### Zero-Shot ReAct
+
+The `"zero-shot-react-description"` agent type enables:
+- **Zero-shot reasoning** – Solve tasks the agent hasn't seen before by thinking step-by-step
+- **Description-based tool selection** – Choose tools based on their descriptions
+
+```python
+from langchain.agents import initialize_agent, AgentType
+
+agent = initialize_agent(
+    tools=tools,
+    llm=llm,
+    agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
+    verbose=True
+)
+```
+
+
 ---
 
 ## Generative models
