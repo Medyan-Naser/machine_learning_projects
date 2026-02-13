@@ -108,3 +108,30 @@ DocChat will be accessible at `http://127.0.0.1:5000`.
 
 📖 **See [OLLAMA_MIGRATION.md](OLLAMA_MIGRATION.md) for detailed migration information and model customization options.**
 
+
+## 🖥️ Usage Guide  
+
+1️⃣ **Upload one or more documents** (PDF, DOCX, TXT, Markdown).  
+
+2️⃣ **Enter a question** related to the document.  
+
+3️⃣ **Click "Submit"** – DocChat retrieves, analyzes, and verifies the response.  
+
+4️⃣ **Review the answer & verification report** for confidence.  
+
+5️⃣ **If the question is out of scope**, DocChat will inform you instead of fabricating an answer.  
+
+
+## 🤝 Contributing  
+
+Want to **improve DocChat**? Feel free to:  
+
+- **Fork the repo**  
+- **Create a new branch** (`feature-xyz`)  
+- **Commit your changes**  
+- **Submit a PR (Pull Request)**  
+
+We welcome contributions from **AI/NLP enthusiasts, researchers, and developers!** 🚀  
+
+---
+
