@@ -57,11 +57,62 @@ Tools are utilities designed to be called by a model—inputs are structured so 
 3. **Custom Tools with `@tool` Decorator** – Wrap any function as a tool the LLM can invoke. This gives you manual control over tool inputs and validation.  
 4. **Tools as OpenAI Functions** – Convert tools using `convert_to_openai_function`, or use `bind_functions`/`bind_tools` to bind tools to OpenAI chat models.
 
-### Popular External Tools & Toolkits
+### The `@tool` Decorator
 
-- **Wikipedia** – Fetch summaries and article information.  
-- **Search Engines** – Bing, Google, DuckDuckGo for real-time search results.  
-- **APIs** – Weather data, financial data, and more.
+The recommended way to create custom tools is using the `@tool` decorator. This decorator simplifies tool creation by wrapping any function into a tool that implements the Tool Interface.
+
+```python
+from langchain_core.tools import tool
+import re
+
+@tool
+def add_numbers(inputs: str) -> dict:
+    """
+    Adds a list of numbers provided in the input string.
+    
+    Parameters:
+    - inputs (str): A string containing numbers to be extracted and summed.
+    
+    Returns:
+    - dict: A dictionary with key "result" containing the sum.
+    
+    Example Input: "Add the numbers 10, 20, and 30."
+    Example Output: {"result": 60}
+    """
+    numbers = [int(num) for num in re.findall(r'\d+', inputs)]
+    result = sum(numbers)
+    return {"result": result}
+```
+
+**Key Points:**
+- The docstring is critical—it tells the LLM when and how to use the tool
+- Input/output types should be clearly defined
+- The function name becomes the tool name
+
+### Popular Built-in Tools
+
+| Tool Name               | Description                                      |
+|-------------------------|--------------------------------------------------|
+| `WikipediaQueryRun`     | Search Wikipedia for factual information         |
+| `GoogleSearchRun`       | Perform web searches using Google's API          |
+| `PythonREPLTool`        | Execute Python code in a safe environment        |
+| `OpenWeatherMapQueryRun`| Fetch real-time weather data                     |
+| `YouTubeSearchTool`     | Search for YouTube videos                        |
+| `DuckDuckGoSearchRun`   | Privacy-focused web search                       |
+| `BingSearchRun`         | Microsoft Bing web search                        |
+
+### Dataset Caching Tools
+
+When building complex data-driven agents, efficiently managing datasets in memory is essential. Since LLMs communicate via text, sending entire datasets in each response wastes tokens and context window space.
+
+**Solution:** Create a global cache that stores DataFrames after they're first loaded.
+
+**Benefits:**
+1. **Reduces token usage** – Reference datasets by name rather than content
+2. **Improves performance** – Load data only once
+3. **Maintains availability** – Datasets persist between different tool calls
+
+**Metadata Tools:** Provide dataset summaries with key statistical information, giving the agent a quick overview without transferring entire content. These tools examine CSV structure and return metadata about available data.
 
 ---
 
