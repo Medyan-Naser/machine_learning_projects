@@ -12,6 +12,13 @@ This makes them more adaptable to **real-world, domain-specific tasks**.
 
 ---
 
+## Docs Map
+- `RAG.md` (Retrieval-Augmented Generation)
+- `langchain.md` (LangChain + LangGraph + agent types)
+- `workflow-patterns.md` (Reflection, Routing, Parallelization)
+- `crewai.md` (CrewAI framework)
+- `ag2-autogen.md` (AG2 / AutoGen framework)
+
 ## Why RAG and LangChain?
 - **RAG (Retrieval-Augmented Generation):** Improves accuracy by injecting external knowledge into LLM outputs.  
 - **LangChain:** A framework that orchestrates LLMs, retrieval systems, and external tools into modular pipelines.  
@@ -24,6 +31,17 @@ Together, they form the foundation of **AI Agents**: intelligent, flexible syste
 1. **LLM (Generator):** Produces natural language responses.  
 2. **Retriever / Knowledge Base:** Finds relevant context (e.g., company policies, documents).  
 3. **Framework (LangChain):** Manages the flow between prompts, retrieval, and generation.  
+
+---
+
+## Workflow Patterns
+Agentic systems often combine multiple workflow patterns:
+
+- **Reflection**: critique + revise loops to improve quality
+- **Routing**: dispatch inputs to specialized handlers
+- **Parallelization**: run independent subtasks concurrently and merge results
+
+See: `workflow-patterns.md`.
 
 ---
 
