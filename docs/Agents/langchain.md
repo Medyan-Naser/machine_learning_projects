@@ -7,6 +7,13 @@ It provides a modular environment to connect **LLMs, retrieval systems (RAG), an
 It facilitates a **structured way to integrate LLMs** into use cases such as **NLP, chatbots, and data retrieval**.  
 LangChain = **reason + retrieve + act**.
 
+## Related Docs
+- `overview.md`
+- `RAG.md`
+- `workflow-patterns.md`
+- `crewai.md`
+- `ag2-autogen.md`
+
 ---
 
 ## Why LangChain?
