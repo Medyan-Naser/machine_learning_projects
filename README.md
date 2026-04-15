@@ -25,11 +25,10 @@ Watch how the neural network learns to recognize handwritten digits! The weight 
 
 Transforming grayscale images into vibrant, colorized versions using neural networks:
 
-<p align="center">
-  <img src="Coloring%20Black%20%26%20White%20Images/result.png" alt="Colorized Tiger" width="400"/>
-  <br>
-  <em>AI-generated colorization of a grayscale image</em>
-</p>
+| Input (Grayscale) | Output (Colorized) |
+|:-----------------:|:------------------:|
+| ![B&W Tiger](Coloring%20Black%20%26%20White%20Images/tiger_bw.png) | ![Colorized Tiger](Coloring%20Black%20%26%20White%20Images/result.png) |
+| *Original black & white image* | *AI-generated colorization* |
 
 ---
 
