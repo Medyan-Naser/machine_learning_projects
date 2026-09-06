@@ -65,3 +65,79 @@ class DataChunkWorkflow:
         workflow.logger.info(f"Chunk {chunk_id} complete: {result['records_processed']} records, {result['anomalies_found']} anomalies")
         return result
 
+
+# ─── Parent Workflow ───────────────────────────────────────────────────────────
+
+@workflow.defn
+class DataAnalysisPipelineWorkflow:
+    """
+    Project 06: Child Workflows — Fan-Out / Fan-In Parallel Processing
+
+    Demonstrates:
+    - Starting multiple child workflows in parallel
+    - Fan-out: distribute work across N child workflows
+    - Fan-in: gather all child results and aggregate
+    - Each child has independent retry/timeout
+    - asyncio.gather for true parallelism
+
+    Use Case:
+    Large dataset analysis. Instead of one workflow processing 1M records
+    sequentially, we split into 10 chunks of 100K records each and process
+    them in parallel with child workflows. This is the Temporal equivalent
+    of MapReduce or Spark partitioning.
+
+    Key Difference from activities:
+    - Activities: single unit of work, runs on one worker
+    - Child Workflows: full workflows, can be long-running, independently durable
+    """
+
+    @workflow.run
+    async def run(self, dataset_name: str, total_records: int, num_chunks: int) -> str:
+        workflow.logger.info(
+            f"Parent workflow started: dataset={dataset_name}, "
+            f"records={total_records}, chunks={num_chunks}"
+        )
+
+        # ── Fan-Out: Create N chunk workflows ──────────────────────────────────
+        chunk_size = total_records // num_chunks
+        child_handles = []
+
+        for i in range(num_chunks):
+            chunk_id = f"{dataset_name}-chunk-{i:03d}"
+            data_range = {
+                "start": i * chunk_size,
+                "end": (i + 1) * chunk_size if i < num_chunks - 1 else total_records,
+            }
+
+            # Start child workflow WITHOUT awaiting (fire-and-forget start)
+            child_handle = await workflow.start_child_workflow(
+                DataChunkWorkflow.run,
+                args=[chunk_id, data_range],
+                id=f"{workflow.info().workflow_id}-{chunk_id}",
+                task_queue=workflow.info().task_queue,
+                execution_timeout=timedelta(minutes=10),
+            )
+            child_handles.append(child_handle)
+            workflow.logger.info(f"Started child workflow: {chunk_id}")
+
+        workflow.logger.info(f"All {num_chunks} child workflows started — awaiting results...")
+
+        # ── Fan-In: Wait for ALL children to complete ──────────────────────────
+        chunk_results = await asyncio.gather(*child_handles)
+        workflow.logger.info(f"All {num_chunks} chunks complete — aggregating...")
+
+        # ── Aggregate ──────────────────────────────────────────────────────────
+        summary = await workflow.execute_activity(
+            aggregate_results,
+            list(chunk_results),
+            start_to_close_timeout=timedelta(minutes=2),
+        )
+
+        return (
+            f"Dataset Analysis Complete: {dataset_name}\n"
+            f"  Chunks processed: {summary['total_chunks']} (in PARALLEL)\n"
+            f"  Total records: {summary['total_records_processed']:,}\n"
+            f"  Total anomalies: {summary['total_anomalies']}\n"
+            f"  Anomaly rate: {summary['anomaly_rate']}%\n"
+            f"  Overall mean value: {summary['overall_mean']}"
+        )
