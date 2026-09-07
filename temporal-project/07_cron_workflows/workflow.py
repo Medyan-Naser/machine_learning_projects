@@ -69,3 +69,89 @@ async def trigger_retraining_pipeline(model_name: str) -> str:
     activity.logger.info(f"Triggered retraining workflow: {workflow_id}")
     return workflow_id
 
+
+# ─── Workflow ──────────────────────────────────────────────────────────────────
+
+@workflow.defn
+class ModelMonitoringWorkflow:
+    """
+    Project 07: Cron Workflows — Scheduled Recurring Execution
+
+    Demonstrates:
+    - Cron scheduling (replaces traditional cron jobs)
+    - workflow.info().continued_run_id to detect subsequent runs
+    - Accessing last run result via workflow.memo or continued_run_id
+    - Conditional logic based on monitoring results
+    - Triggering other workflows based on monitoring outcome
+
+    Use Case:
+    ML Model Monitoring that runs every hour:
+    1. Collect model performance metrics
+    2. Check for model drift
+    3. Send monitoring report
+    4. Auto-trigger retraining if drift detected
+
+    Key Temporal Cron Features:
+    - Unlike traditional cron: if a run fails, Temporal retries it
+    - Unlike traditional cron: full event history for every run
+    - Unlike traditional cron: can query/signal/cancel via Web UI or CLI
+    - Unlike traditional cron: handles timezone-aware scheduling
+    - cron_schedule uses standard cron syntax: "0 * * * *" = every hour
+    """
+
+    def __init__(self):
+        self._run_count = 0
+
+    @workflow.query
+    def get_run_count(self) -> int:
+        return self._run_count
+
+    @workflow.run
+    async def run(self) -> str:
+        self._run_count += 1
+        run_number = self._run_count
+        run_time = workflow.now().isoformat()
+
+        workflow.logger.info(f"Monitoring run #{run_number} started at {run_time}")
+
+        retry_policy = RetryPolicy(
+            initial_interval=timedelta(seconds=5),
+            maximum_attempts=3,
+        )
+
+        # Step 1: Collect metrics
+        metrics = await workflow.execute_activity(
+            collect_model_metrics,
+            retry_policy=retry_policy,
+            start_to_close_timeout=timedelta(minutes=2),
+        )
+
+        # Step 2: Check drift
+        drift_info = await workflow.execute_activity(
+            check_model_drift,
+            metrics,
+            retry_policy=retry_policy,
+            start_to_close_timeout=timedelta(minutes=1),
+        )
+
+        # Step 3: Send report
+        report = await workflow.execute_activity(
+            send_monitoring_report,
+            args=[metrics, drift_info, run_number],
+            retry_policy=retry_policy,
+            start_to_close_timeout=timedelta(minutes=1),
+        )
+
+        # Step 4: Conditionally trigger retraining
+        if drift_info["needs_retraining"]:
+            workflow.logger.warning("Drift detected — triggering retraining!")
+            retrain_id = await workflow.execute_activity(
+                trigger_retraining_pipeline,
+                metrics["model_name"],
+                retry_policy=retry_policy,
+                start_to_close_timeout=timedelta(minutes=2),
+            )
+            workflow.logger.info(f"Retraining triggered: {retrain_id}")
+
+        workflow.logger.info(f"Monitoring run #{run_number} complete")
+        return report
